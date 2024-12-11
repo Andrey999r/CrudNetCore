@@ -1,0 +1,6 @@
+﻿services:
+  smth:
+    image: smth
+    build:
+      context: .
+      dockerfile: Smth/Dockerfile

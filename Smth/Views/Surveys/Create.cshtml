@@ -1,0 +1,58 @@
+@{
+    ViewBag.Title = "Создать опрос";
+}
+
+<h1>Создать опрос</h1>
+
+<form method="post" class="create-survey-form">
+    <div class="form-row">
+        <input type="text" name="name" placeholder="Название опроса" class="survey-input" />
+        <textarea name="description" placeholder="Описание" class="survey-textarea"></textarea>
+    </div>
+
+    <h3>Вопросы:</h3>
+    <div id="questions-container">
+        <div class="question-row">
+            <input type="text" name="questions" placeholder="Вопрос 1" class="question-input" />
+            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
+        </div>
+        <div class="question-row">
+            <input type="text" name="questions" placeholder="Вопрос 2" class="question-input" />
+            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
+        </div>
+        <div class="question-row">
+            <input type="text" name="questions" placeholder="Вопрос 3" class="question-input" />
+            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button type="button" class="add-question-btn" onclick="addQuestion()">Добавить вопрос</button>
+        <input type="submit" value="Создать" class="create-button" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        function addQuestion() {
+            var container = document.getElementById("questions-container");
+            var count = container.querySelectorAll('.question-row').length + 1;
+            var row = document.createElement('div');
+            row.className = 'question-row';
+            row.innerHTML = '<input type="text" name="questions" placeholder="Вопрос ' + count + '" class="question-input" />' +
+                            '<button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>';
+            container.appendChild(row);
+        }
+
+        function removeQuestion(btn) {
+            var row = btn.parentNode;
+            var container = document.getElementById("questions-container");
+            container.removeChild(row);
+            var rows = container.querySelectorAll('.question-row');
+            rows.forEach((r, i) => {
+                var input = r.querySelector('.question-input');
+                input.placeholder = "Вопрос " + (i + 1);
+            });
+        }
+    </script>
+}

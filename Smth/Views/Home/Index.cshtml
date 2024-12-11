@@ -1,0 +1,40 @@
+﻿@model List<Smth.Data.Survey>
+
+@{
+ViewBag.Title = "Мои опросы";
+}
+
+<h1 class="page-title">Мои опросы</h1>
+
+<div class="actions-bar">
+    <a class="create-survey-link" href="/Surveys/Create">Создать опрос</a>
+</div>
+
+@if (Model == null || !Model.Any())
+{
+<p class="no-surveys">Пока нет созданных опросов.</p>
+}
+else
+{
+<table class="surveys-table">
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var s in Model)
+    {
+    <tr>
+        <td>@s.Name</td>
+        <td class="actions-cell">
+            <a href="/Surveys/Delete/@s.Id" class="action-link">Удалить</a>
+            <a href="/Surveys/Share/@s.Id" class="action-link">Поделиться</a>
+            <a href="/Surveys/Details/@s.Id" class="action-link">Детали</a>
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>
+}

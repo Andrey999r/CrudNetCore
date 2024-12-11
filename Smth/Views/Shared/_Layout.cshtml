@@ -1,0 +1,73 @@
+﻿@{
+bool userLoggedIn = false;
+if (Context.Session.TryGetValue("UserId", out byte[] userIdBytes))
+{
+userLoggedIn = true;
+}
+
+var currentPath = Context.Request.Path.Value?.ToLower();
+bool onRegisterPage = currentPath == "/account/register";
+bool onLoginPage = currentPath == "/account/login";
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My Survey App</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Head", required: false)
+</head>
+<body>
+<header>
+    <div class="top-bar">
+        <div class="logo">
+            <a href="/">My Survey App</a>
+        </div>
+        <div class="user-menu">
+            @if (userLoggedIn)
+            {
+            <div class="profile-icon" onclick="toggleProfileMenu(event)" style="padding: 0 10px; font-weight: 500;">
+                Профиль
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="https://github.com/ВашРепозиторий" target="_blank">Исходный код</a>
+                    <a href="/Account/Logout">Выйти</a>
+                </div>
+            </div>
+            }
+            else
+            {
+            if (!onRegisterPage && !onLoginPage)
+            {
+            <span class="auth-links">
+                            <a href="/Account/Login">Войти</a>
+                            <a href="/Account/Register">Регистрация</a>
+                        </span>
+            }
+            }
+        </div>
+    </div>
+</header>
+
+<div class="main-content">
+    @RenderBody()
+</div>
+
+@RenderSection("Scripts", required: false)
+<script>
+    function toggleProfileMenu(e) {
+        e.stopPropagation();
+        var dropdown = document.getElementById("profileDropdown");
+        dropdown.classList.toggle("show-dropdown");
+    }
+
+    document.addEventListener('click', function(event) {
+        var dropdown = document.getElementById("profileDropdown");
+        var profileIcon = document.querySelector('.profile-icon');
+        if (dropdown && profileIcon && !profileIcon.contains(event.target)) {
+            dropdown.classList.remove('show-dropdown');
+        }
+    });
+</script>
+</body>
+</html>

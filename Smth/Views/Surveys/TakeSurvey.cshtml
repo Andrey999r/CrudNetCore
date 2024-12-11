@@ -1,0 +1,23 @@
+@{
+    var survey = Model as dynamic;
+    ViewBag.Title = survey.Name;
+}
+
+<h2 class="page-title">@survey.Name</h2>
+<div class="survey-container">
+    <p class="survey-description">@survey.Description</p>
+
+    <form method="post" class="survey-form">
+        <input type="text" name="participantName" placeholder="Ваше имя" class="survey-input" />
+
+        @foreach(var q in survey.Questions)
+        {
+            <div class="question-block">
+                <p class="question-text">@q.Text</p>
+                <input type="text" name="answers" class="survey-input" />
+            </div>
+        }
+
+        <input type="submit" value="Отправить ответы" class="survey-submit" />
+    </form>
+</div>
