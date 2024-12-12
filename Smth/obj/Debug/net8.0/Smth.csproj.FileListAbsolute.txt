@@ -168,3 +168,4 @@ C:\Users\gyman\RiderProjects\Smth\smth\obj\Debug\net8.0\refint\Smth.dll
 C:\Users\gyman\RiderProjects\Smth\smth\obj\Debug\net8.0\Smth.pdb
 C:\Users\gyman\RiderProjects\Smth\smth\obj\Debug\net8.0\Smth.genruntimeconfig.cache
 C:\Users\gyman\RiderProjects\Smth\smth\obj\Debug\net8.0\ref\Smth.dll
+C:\Users\gyman\RiderProjects\Smth\Smth\obj\Debug\net8.0\Smth.sourcelink.json
