@@ -1,13 +1,18 @@
 @{
-ViewBag.Title = "Регистрация";
+    ViewBag.Title = "Регистрация";
 }
 
 <h2 class="auth-title">Регистрация</h2>
 
 <div class="auth-container">
+    @if (ViewBag.Error != null)
+    {
+        <div class="error-message">@ViewBag.Error</div>
+    }
+
     <form method="post" class="auth-form">
-        <input type="text" name="username" placeholder="Логин" class="auth-input" />
-        <input type="password" name="password" placeholder="Пароль" class="auth-input" />
+        <input type="text" name="username" placeholder="Логин" class="auth-input" required />
+        <input type="password" name="password" placeholder="Пароль" class="auth-input" required />
         <input type="submit" value="Зарегистрироваться" class="auth-submit" />
     </form>
 

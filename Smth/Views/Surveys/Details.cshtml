@@ -1,7 +1,7 @@
 @model Smth.ViewModel.SurveyDetailsViewModel
 
 @{
-    ViewBag.Title = Model.Name;
+ViewBag.Title = Model.Name;
 }
 
 <h2 class="page-title">@Model.Name</h2>
@@ -13,30 +13,33 @@
 
     @if (Model.Participants == null || !Model.Participants.Any())
     {
-        <p class="no-participants">Пока никто не прошёл этот опрос.</p>
+    <p class="no-participants">Пока никто не прошёл этот опрос.</p>
     }
     else
     {
-        <div class="participants-list">
-            @foreach (var p in Model.Participants)
+    <div class="participants-list">
+        @foreach (var p in Model.Participants)
+        {
+        <div class="participant-block">
+            <h4 class="participant-name">@p.ParticipantName</h4>
+            @if (p.Answers == null || !p.Answers.Any())
             {
-                <div class="participant-block">
-                    <h4 class="participant-name">@p.ParticipantName</h4>
-                    @if (p.Answers == null || !p.Answers.Any())
-                    {
-                        <p class="no-answers">Нет ответов</p>
-                    }
-                    else
-                    {
-                        <ul class="answers-list">
-                            @foreach (var a in p.Answers)
-                            {
-                                <li><strong>@a.Text</strong>: @a.ResponseText</li>
-                            }
-                        </ul>
-                    }
-                </div> 
+            <p class="no-answers">Нет ответов</p>
             }
-        </div> 
+            else
+            {
+            <ul class="answers-list">
+                @foreach (var a in p.Answers)
+                {
+                <li><strong>@a.Text</strong>: @a.ResponseText</li>
+                }
+            </ul>
+            }
+        </div>
+        }
+    </div>
     }
-</div> 
+</div>
+
+<h2>Поделиться опросом</h2>
+<p>Ссылка: @ViewBag.ShareLink</p>

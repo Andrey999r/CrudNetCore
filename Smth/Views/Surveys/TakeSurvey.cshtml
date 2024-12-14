@@ -1,20 +1,21 @@
+@model dynamic
+
 @{
-    var survey = Model as dynamic;
-    ViewBag.Title = survey.Name;
+    ViewBag.Title = Model.Name;
 }
 
-<h2 class="page-title">@survey.Name</h2>
+<h2 class="page-title">@Model.Name</h2>
 <div class="survey-container">
-    <p class="survey-description">@survey.Description</p>
+    <p class="survey-description">@Model.Description</p>
 
     <form method="post" class="survey-form">
-        <input type="text" name="participantName" placeholder="Ваше имя" class="survey-input" />
+        <input type="text" name="participantName" placeholder="Ваше имя" class="survey-input" required />
 
-        @foreach(var q in survey.Questions)
+        @foreach(var q in Model.Questions)
         {
             <div class="question-block">
                 <p class="question-text">@q.Text</p>
-                <input type="text" name="answers" class="survey-input" />
+                <input type="text" name="answers" class="survey-input" required />
             </div>
         }
 

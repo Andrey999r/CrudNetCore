@@ -1,5 +1,7 @@
 using Smth.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smth.Controllers
 {
@@ -13,24 +15,17 @@ namespace Smth.Controllers
 
         public IActionResult Index()
         {
-            int? userId = GetCurrentUserId();
-            if (userId == null)
-                return RedirectToAction("Register", "Account"); 
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+            if (userIdClaim == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-            var surveys = _context.Surveys
-                .Where(s => s.ApplicationUserId == userId.Value)
-                .ToList();
+            var userId = int.Parse(userIdClaim.Value);
+            var surveys = _context.Surveys.Where(s => s.ApplicationUserId == userId).ToList();
 
             return View(surveys);
         }
 
-        private int? GetCurrentUserId()
-        {
-            if (HttpContext.Session.TryGetValue("UserId", out byte[] userIdBytes))
-            {
-                return BitConverter.ToInt32(userIdBytes, 0);
-            }
-            return null;
-        }
     }
 }

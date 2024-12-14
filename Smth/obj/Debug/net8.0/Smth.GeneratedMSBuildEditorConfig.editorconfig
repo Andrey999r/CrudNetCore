@@ -17,63 +17,63 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Smth
 build_property.RootNamespace = Smth
-build_property.ProjectDir = C:\Users\gyman\RiderProjects\Smth\Smth\
+build_property.ProjectDir = C:\Users\gyman\RiderProjects\CrudNetCore\Smth\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\gyman\RiderProjects\Smth\Smth
+build_property.MSBuildProjectDirectory = C:\Users\gyman\RiderProjects\CrudNetCore\Smth
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Account/Login.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Account/Register.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Home/Index.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Home/Privacy.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Shared/Error.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Surveys/Create.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Surveys/Details.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Surveys/Share.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Share.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xTaGFyZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Surveys/TakeSurvey.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/TakeSurvey.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xUYWtlU3VydmV5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/_ViewImports.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/_ViewStart.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/Smth/Smth/Views/Shared/_Layout.cshtml]
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-jimexezxqm

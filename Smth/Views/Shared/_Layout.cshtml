@@ -1,15 +1,13 @@
-﻿@{
-bool userLoggedIn = false;
-if (Context.Session.TryGetValue("UserId", out byte[] userIdBytes))
-{
-userLoggedIn = true;
-}
+﻿@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authorization
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-var currentPath = Context.Request.Path.Value?.ToLower();
-bool onRegisterPage = currentPath == "/account/register";
-bool onLoginPage = currentPath == "/account/login";
+@{
+    bool userLoggedIn = User.Identity.IsAuthenticated;
+    var currentPath = Context.Request.Path.Value?.ToLower();
+    bool onRegisterPage = currentPath == "/account/register";
+    bool onLoginPage = currentPath == "/account/login";
 }
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -27,23 +25,23 @@ bool onLoginPage = currentPath == "/account/login";
         <div class="user-menu">
             @if (userLoggedIn)
             {
-            <div class="profile-icon" onclick="toggleProfileMenu(event)" style="padding: 0 10px; font-weight: 500;">
-                Профиль
-                <div class="profile-dropdown" id="profileDropdown">
-                    <a href="https://github.com/Andrey999r/CrudNetCore" target="_blank">Исходный код</a>
-                    <a href="/Account/Logout">Выйти</a>
+                <div class="profile-icon" onclick="toggleProfileMenu(event)" style="padding: 0 10px; font-weight: 500;">
+                    Профиль
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="https://github.com/Andrey999r/CrudNetCore" target="_blank">Исходный код</a>
+                        <a href="/Account/Logout">Выйти</a>
+                    </div>
                 </div>
-            </div>
             }
             else
             {
-            if (!onRegisterPage && !onLoginPage)
-            {
-            <span class="auth-links">
-                            <a href="/Account/Login">Войти</a>
-                            <a href="/Account/Register">Регистрация</a>
-                        </span>
-            }
+                if (!onRegisterPage && !onLoginPage)
+                {
+                    <span class="auth-links">
+                        <a href="/Account/Login">Войти</a>
+                        <a href="/Account/Register">Регистрация</a>
+                    </span>
+                }
             }
         </div>
     </div>

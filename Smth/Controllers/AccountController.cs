@@ -1,63 +1,89 @@
-﻿using Smth.Data;
-
-namespace Smth.Controllers;
-
+﻿using Smth.Services;
+using Smth.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using Microsoft.Extensions.Configuration;
+using System;
+using Smth.Interfaces;
 
-public class AccountController : Controller
+namespace Smth.Controllers
 {
-    private readonly ApplicationDbContext _context;
-    public AccountController(ApplicationDbContext context)
+    public class AccountController : Controller
     {
-        _context = context;
-    }
+        private readonly IAuth _authService;
+        private readonly IJwt _jwtService;
+        private readonly IConfiguration _configuration;
 
-    [HttpGet]
-    public IActionResult Register()
-    {
-        return View();
-    }
-    
-    [HttpPost]
-    public IActionResult Register(string username, string password)
-    {
-        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+        public AccountController(IAuth authService, IJwt jwtService, IConfiguration configuration)
+        {
+            _authService = authService;
+            _jwtService = jwtService;
+            _configuration = configuration;
+        }
+
+        [HttpGet]
+        public IActionResult Register()
         {
             return View();
         }
 
-        var user = new ApplicationUser { Username = username, PasswordHash = password }; // Для примера без хеша
-        _context.Users.Add(user);
-        _context.SaveChanges();
-
-        HttpContext.Session.Set("UserId", System.BitConverter.GetBytes(user.Id));
-
-        return RedirectToAction("Index", "Home");
-    }
-
-    [HttpGet]
-    public IActionResult Login()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult Login(string username, string password)
-    {
-        var user = _context.Users.FirstOrDefault(u => u.Username == username && u.PasswordHash == password);
-        if (user != null)
+        [HttpPost]
+        public IActionResult Register(string username, string password)
         {
-            HttpContext.Session.Set("UserId", System.BitConverter.GetBytes(user.Id));
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                var user = _authService.Register(username, password);
+                var token = _jwtService.GenerateToken(user);
+
+                Response.Cookies.Append("JwtToken", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.UtcNow.AddMinutes(60)
+                });
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
         }
 
-        return View();
-    }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
 
-    public IActionResult Logout()
-    {
-        HttpContext.Session.Remove("UserId");
-        return RedirectToAction("Login");
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+            var user = _authService.Login(username, password);
+            if (user != null)
+            {
+                var token = _jwtService.GenerateToken(user);
+
+                Response.Cookies.Append("JwtToken", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.UtcNow.AddMinutes(60)
+                });
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Error = "Неверный логин или пароль.";
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("JwtToken");
+            return RedirectToAction("Login");
+        }
     }
 }
