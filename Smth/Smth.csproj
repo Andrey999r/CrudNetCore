@@ -15,13 +15,40 @@
 
     <ItemGroup>
       <PackageReference Include="BCrypt.Net" Version="0.1.0" />
+      <PackageReference Include="InMemory" Version="1.0.7">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+      <PackageReference Include="Microsoft.TestPlatform" Version="17.12.0" />
+      <PackageReference Include="Moq" Version="4.20.72" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
+      <PackageReference Include="xunit" Version="2.9.2" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="UnitTesting\Testing\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="UnitTesting\Testing\obj\Testing.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="Test1\Test1\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="Test1\Test1\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="Test1\Test1\obj\Test1.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="TestProject1\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="TestProject1\obj\TestProject1.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="UnitTesting\obj\Debug\net8.0\TestProject1.sourcelink.json" />
+      <_ContentIncludedByDefault Remove="UnitTesting\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="UnitTesting\obj\TestProject1.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="UnitTesting\obj\UnitTesting.csproj.nuget.dgspec.json" />
     </ItemGroup>
 
 </Project>
