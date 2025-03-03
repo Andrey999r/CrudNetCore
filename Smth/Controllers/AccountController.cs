@@ -27,11 +27,11 @@ namespace Smth.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(string username, string password)
+        public IActionResult Register(string username, string password, string email)
         {
             try
             {
-                var user = _authService.Register(username, password);
+                var user = _authService.Register(username, password, email);
                 var token = _jwtService.GenerateToken(user);
 
                 Response.Cookies.Append("JwtToken", token, new CookieOptions

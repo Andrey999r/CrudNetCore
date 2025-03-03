@@ -432,3 +432,6 @@ C:\Users\gyman\RiderProjects\CrudNetCore\Smth\bin\Debug\net8.0\zh-Hans\Microsoft
 C:\Users\gyman\RiderProjects\CrudNetCore\Smth\bin\Debug\net8.0\zh-Hant\Microsoft.TestPlatform.CommunicationUtilities.resources.dll
 C:\Users\gyman\RiderProjects\CrudNetCore\Smth\bin\Debug\net8.0\zh-Hant\Microsoft.TestPlatform.CrossPlatEngine.resources.dll
 C:\Users\gyman\RiderProjects\CrudNetCore\Smth\bin\Debug\net8.0\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
+C:\Users\gyman\RiderProjects\CrudNetCore\Smth\bin\Debug\net8.0\Smth.staticwebassets.endpoints.json
+C:\Users\gyman\RiderProjects\CrudNetCore\Smth\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\gyman\RiderProjects\CrudNetCore\Smth\obj\Debug\net8.0\staticwebassets\msbuild.Smth.Microsoft.AspNetCore.StaticWebAssetEndpoints.props

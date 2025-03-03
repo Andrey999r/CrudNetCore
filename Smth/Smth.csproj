@@ -49,6 +49,9 @@
       <_ContentIncludedByDefault Remove="UnitTesting\obj\project.assets.json" />
       <_ContentIncludedByDefault Remove="UnitTesting\obj\TestProject1.csproj.nuget.dgspec.json" />
       <_ContentIncludedByDefault Remove="UnitTesting\obj\UnitTesting.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="WpfApp1\WpfApp1\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="WpfApp1\WpfApp1\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="WpfApp1\WpfApp1\obj\WpfApp1.csproj.nuget.dgspec.json" />
     </ItemGroup>
 
 </Project>

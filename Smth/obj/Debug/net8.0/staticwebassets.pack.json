@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "C:\\Users\\gyman\\RiderProjects\\CrudNetCore\\Smth\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Smth.bundle.scp.css",
-      "PackagePath": "staticwebassets\\Smth.bundle.scp.css"
+      "PackagePath": "staticwebassets\\Smth.69d4zn4ktl.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\gyman\\RiderProjects\\CrudNetCore\\Smth\\wwwroot\\css\\site.css",
@@ -243,6 +243,10 @@
     {
       "Id": "C:\\Users\\gyman\\RiderProjects\\CrudNetCore\\Smth\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Smth.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Smth.Microsoft.AspNetCore.StaticWebAssets.props",

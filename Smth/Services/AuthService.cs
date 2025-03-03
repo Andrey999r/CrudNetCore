@@ -12,18 +12,22 @@ namespace Smth.Services
             _context = context;
         }
 
-        public ApplicationUser Register(string username, string password)
+        public ApplicationUser Register(string username, string email, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-                throw new ArgumentException("Username and password cannot be empty.");
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+                throw new ArgumentException("Все поля обязательны для заполнения.");
 
             if (_context.Users.Any(u => u.Username == username))
-                throw new InvalidOperationException("Username already exists.");
+                throw new InvalidOperationException("Логин уже занят.");
+
+            if (_context.Users.Any(u => u.Email == email))
+                throw new InvalidOperationException("Email уже зарегистрирован.");
 
             var user = new ApplicationUser
             {
                 Username = username,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(password) 
+                Email = email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(password)
             };
 
             _context.Users.Add(user);
@@ -32,9 +36,11 @@ namespace Smth.Services
             return user;
         }
 
-        public ApplicationUser Login(string username, string password)
+        public ApplicationUser Login(string login, string password)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            var user = _context.Users.FirstOrDefault(u => 
+                u.Username == login || u.Email == login);
+
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
                 return null;
 

@@ -1,2 +1,27 @@
-<h2>Поделиться опросом</h2>
-<p>Ссылка: @ViewBag.ShareLink</p>
+
+
+@{
+ViewBag.Title = "Поделиться опросом";
+}
+
+<div class="container mt-5 text-light">
+    <h2 class="text-center">Поделиться опросом</h2>
+    <p class="text-center">Скопируйте ссылку или отправьте приглашение на email.</p>
+
+    <div class="input-group mb-4">
+        <input id="surveyLink" type="text" class="form-control" value="@Model.SurveyUrl" readonly>
+        <button class="btn btn-primary" onclick="copyLink()">Скопировать</button>
+    </div>
+
+  
+</div>
+
+<script>
+    function copyLink() {
+        var copyText = document.getElementById("surveyLink");
+        copyText.select();
+        document.execCommand("copy");
+        alert("Ссылка скопирована: " + copyText.value);
+    }
+</script>
+

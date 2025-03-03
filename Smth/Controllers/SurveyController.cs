@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using Smth.Services;
 
 namespace Smth.Controllers
 {
@@ -12,9 +13,13 @@ namespace Smth.Controllers
   public class SurveysController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public SurveysController(ApplicationDbContext context)
+        private readonly IConfiguration _configuration;
+
+        public SurveysController(ApplicationDbContext? context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
+
         }
 
         public IActionResult Create()
@@ -159,5 +164,7 @@ namespace Smth.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
+       
+
     }
 }
