@@ -1,0 +1,49 @@
+@model List<Smth.Data.Survey>
+@{
+    ViewBag.ActiveTab = "Completed";
+    ViewBag.Title = "Пройденные опросы";
+}
+
+<h2>Пройденные опросы</h2>
+
+@if (!Model.Any())
+{
+    <p class="no-surveys">Вы пока не проходили опросы.</p>
+}
+else
+{
+    <table class="surveys-table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Дата прохождения</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var survey in Model)
+            {
+                var participant = survey.Participants.FirstOrDefault(p => p.Email == ViewBag.UserEmail);
+                if (participant != null)
+                {
+                    bool isSelfCompleted = survey.Owner?.Email == ViewBag.UserEmail;
+
+                    <tr>
+                        <td>@survey.Name</td>
+                        <td>@participant.CompletedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            @if (isSelfCompleted)
+                            {
+                                <span class="self-completed">Пройден самостоятельно</span>
+                            }
+                            else
+                            {
+                                <span class="completed-by-others">Полученный опрос</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

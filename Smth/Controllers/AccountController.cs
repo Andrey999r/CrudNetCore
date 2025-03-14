@@ -1,9 +1,9 @@
-﻿using Smth.Services;
-using Smth.Data;
+﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
+using Smth.Data;
 using Smth.Interfaces;
+using Smth.Services;
 
 namespace Smth.Controllers
 {
@@ -27,11 +27,11 @@ namespace Smth.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(string username, string password, string email)
+        public IActionResult Register(string username, string email, string password)
         {
             try
             {
-                var user = _authService.Register(username, password, email);
+                var user = _authService.Register(username, email, password);
                 var token = _jwtService.GenerateToken(user);
 
                 Response.Cookies.Append("JwtToken", token, new CookieOptions
@@ -50,7 +50,6 @@ namespace Smth.Controllers
                 return View();
             }
         }
-
         [HttpGet]
         public IActionResult Login()
         {

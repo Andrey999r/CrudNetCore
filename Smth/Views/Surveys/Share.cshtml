@@ -1,27 +1,98 @@
-
-
 @{
-ViewBag.Title = "Поделиться опросом";
+    ViewBag.Title = "Поделиться опросом";
 }
 
-<div class="container mt-5 text-light">
-    <h2 class="text-center">Поделиться опросом</h2>
-    <p class="text-center">Скопируйте ссылку или отправьте приглашение на email.</p>
+<div class="share-container">
+    <h2>Поделиться опросом</h2>
+    <p>Скопируйте ссылку или отправьте приглашение на email.</p>
 
-    <div class="input-group mb-4">
-        <input id="surveyLink" type="text" class="form-control" value="@Model.SurveyUrl" readonly>
-        <button class="btn btn-primary" onclick="copyLink()">Скопировать</button>
+    <!-- Поле с ссылкой -->
+    <div class="input-group">
+        <input id="surveyLink" type="text" class="input-field" value="@ViewBag.ShareLink" readonly>
+        <button class="copy-btn" onclick="copyLink()">Скопировать</button>
     </div>
 
-  
+    <!-- Форма отправки email -->
+    <form method="post" action="@Url.Action("SendSurveyInvitation", "Surveys")">
+        <input type="hidden" name="surveyId" value="@ViewBag.SurveyId" />
+        <label for="email" class="label">Email получателя:</label>
+        <input type="email" class="input-field" name="recipientEmail" id="email" required>
+        <button type="submit" class="send-btn">Отправить приглашение</button>
+    </form>
 </div>
+
+<style>
+    .share-container {
+        background-color: #222;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 600px;
+        margin: auto;
+        color: #ddd;
+    }
+
+    h2 {
+        color: white;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        justify-content: center;
+    }
+
+    .input-field {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background: #333;
+        color: white;
+        text-align: center;
+    }
+
+    .copy-btn, .send-btn {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .copy-btn {
+        background-color: #00bfa5;
+        color: white;
+    }
+
+    .send-btn {
+        background-color: #67BA80;
+        color: white;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .copy-btn:hover {
+        background-color: #009688;
+    }
+
+    .send-btn:hover {
+        background-color: #4CAF50;
+    }
+
+    .label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+</style>
 
 <script>
     function copyLink() {
         var copyText = document.getElementById("surveyLink");
-        copyText.select();
-        document.execCommand("copy");
-        alert("Ссылка скопирована: " + copyText.value);
+        navigator.clipboard.writeText(copyText.value).then(() => {
+            alert("Ссылка скопирована: " + copyText.value);
+        });
     }
 </script>
-

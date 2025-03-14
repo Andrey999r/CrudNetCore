@@ -1,24 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Smth.Data;
-using Smth.ViewModel;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Linq;
-using System;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Smth.Data;
+using Smth.Interfaces;
+using Smth.Models;
 using Smth.Services;
+using Smth.ViewModel;
 
 namespace Smth.Controllers
 {
     [Authorize]
-  public class SurveysController : Controller
+    public class SurveysController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public SurveysController(ApplicationDbContext? context, IConfiguration configuration)
+        public SurveysController(ApplicationDbContext? context, IConfiguration configuration, IEmailService emailService)
         {
             _context = context;
             _configuration = configuration;
+            _emailService = emailService;
 
         }
 
@@ -51,8 +56,40 @@ namespace Smth.Controllers
             _context.Surveys.Add(survey);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Created", "Surveys");
         }
+        public IActionResult Created()
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int userIdd))
+            {
+                return BadRequest("Некорректный ID пользователя");
+            }
+
+            // Получаем опросы, связанные с данным пользователем
+            var surveys = _context.Surveys.Where(s => s.ApplicationUserId == userIdd).ToList();
+            return View(surveys);
+        }
+
+        public IActionResult Completed()
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+
+            string userEmail = User.Identity.Name; // Или другой способ получения текущего email
+
+            var completedSurveys = _context.Surveys
+                .Include(s => s.Owner) // Загружаем владельца
+                .Include(s => s.Participants) // Загружаем участников
+                .Where(s => s.Participants.Any(p => p.Email == userEmail)) // Ищем опросы, где есть участник с нашим email
+                .ToList();
+
+            ViewBag.UserEmail = userEmail;
+
+            return View(completedSurveys);
+        }
+
+
 
         public IActionResult Details(int id)
         {
@@ -70,7 +107,9 @@ namespace Smth.Controllers
                     Description = s.Description,
                     Participants = s.Participants.Select(p => new ParticipantViewModel
                     {
+                        Id = p.Id, // добавляем Id!
                         ParticipantName = p.ParticipantName,
+                        Email = p.Email, // добавляем Email!
                         Answers = p.Answers.Select(a => new AnswerViewModel
                         {
                             Text = a.Question.Text,
@@ -85,6 +124,7 @@ namespace Smth.Controllers
 
             return View(survey);
         }
+
 
         public IActionResult Delete(int id)
         {
@@ -115,10 +155,47 @@ namespace Smth.Controllers
 
         public IActionResult Share(int id)
         {
-            var shareLink = Url.Action("TakeSurvey", "Surveys", new { id }, Request.Scheme);
-            ViewBag.ShareLink = shareLink;
+            var survey = _context.Surveys.FirstOrDefault(s => s.Id == id);
+            if (survey == null) return NotFound();
+
+            ViewBag.SurveyId = id;
+            ViewBag.ShareLink = Url.Action("TakeSurvey", "Surveys", new { id }, Request.Scheme);
+
             return View();
         }
+
+
+        [HttpPost]
+
+        public IActionResult SendSurveyInvitation(int surveyId, string recipientEmail)
+        {
+            try
+            {
+                var survey = _context.Surveys.FirstOrDefault(s => s.Id == surveyId);
+                if (survey == null)
+                {
+                    ViewBag.Message = "Опрос не найден.";
+                    ViewBag.IsSuccess = false;
+                    return View("ShareSurveyResult");
+                }
+
+                var surveyLink = Url.Action("TakeSurvey", "Surveys", new { id = surveyId }, Request.Scheme);
+                _emailService.SendSurveyInvitation(recipientEmail, surveyLink);
+
+                ViewBag.Message = "Приглашение успешно отправлено!";
+                ViewBag.IsSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Ошибка при отправке: " + ex.Message;
+                ViewBag.IsSuccess = false;
+            }
+
+            return View("ShareSurveyResult");
+        }
+
+
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -135,22 +212,54 @@ namespace Smth.Controllers
                 })
                 .FirstOrDefault();
 
+            if (survey == null)
+            {
+                return NotFound("Опрос не найден.");
+            }
+
             return View(survey);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult TakeSurvey(int id, string participantName, string[] answers)
+        public IActionResult TakeSurvey(int id, string participantName, string participantEmail, string[] answers)
         {
             var survey = _context.Surveys.FirstOrDefault(s => s.Id == id);
             if (survey == null)
-                return NotFound();
+            {
+                return NotFound("Опрос не найден.");
+            }
 
-            var participant = new Participant { ParticipantName = participantName, SurveyId = id };
+            if (string.IsNullOrWhiteSpace(participantEmail))
+            {
+                return BadRequest("Не указан email участника.");
+            }
+
+            if (answers == null || answers.Length == 0)
+            {
+                return BadRequest("Вы не ответили ни на один вопрос.");
+            }
+            bool isSelfCompleted = survey.Owner?.Email == participantEmail;
+            var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+            int.TryParse(userId, out int currentUserId);
+            // Создаём участника с Email
+            var participant = new Participant
+            {
+                ParticipantName = participantName ?? "Аноним",
+                Email = participantEmail, // Указываем Email, чтобы не было NULL
+                SurveyId = id,
+                CompletedAt = DateTime.UtcNow
+            };
+
             _context.Participants.Add(participant);
             _context.SaveChanges();
 
-            var surveyQuestions = _context.Questions.Where(q => q.SurveyId == id).ToList();
+            // Получаем вопросы этого опроса
+            var surveyQuestions = _context.Questions
+                .Where(q => q.SurveyId == id)
+                .ToList();
+
+            // Сохраняем ответы
             for (int i = 0; i < surveyQuestions.Count && i < answers.Length; i++)
             {
                 _context.Answers.Add(new Answer
@@ -162,9 +271,87 @@ namespace Smth.Controllers
             }
 
             _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            if (isSelfCompleted)
+            {
+                TempData["SelfCompleted"] = "Вы прошли свой же опрос!";
+            }
+            return RedirectToAction("Completed", "Surveys"); // После прохождения редирект в "Пройденные"
         }
-       
+
+
+
+        [HttpPost]
+        public IActionResult UpdateEmail(ParticipantViewModel model)
+        {
+            var participant = _context.Participants.Find(model.Id);
+            if (participant == null)
+            {
+                return NotFound();
+            }
+
+            participant.Email = model.Email;
+            _context.SaveChanges();
+
+            TempData["Message"] = "Email успешно обновлен!";
+            return RedirectToAction("Info", new { participantId = model.Id });
+        }
+
+        [HttpGet]
+        public IActionResult Info(int participantId)
+        {
+            var participant = _context.Participants
+                .Include(p => p.Answers)
+                .ThenInclude(a => a.Question) // Убедимся, что вопрос загружается
+                .FirstOrDefault(p => p.Id == participantId);
+
+            if (participant == null)
+                return NotFound();
+
+            var viewModel = new ParticipantViewModel
+            {
+                Id = participant.Id,
+                ParticipantName = participant.ParticipantName,
+                Email = participant.Email,
+
+                Answers = (participant.Answers ?? new List<Answer>()).Select(a => new AnswerViewModel
+                {
+                    Text = a.Question?.Text ?? "Нет данных", // Проверяем, что вопрос не null
+                    ResponseText = a.ResponseText
+                }).ToList()
+            };
+
+            return View(viewModel);
+        }
+
+
+
+
+        [HttpPost]
+        public IActionResult DeleteParticipant(int participantId)
+        {
+            var participant = _context.Participants
+                .Include(p => p.Answers) // Загружаем связанные ответы
+                .FirstOrDefault(p => p.Id == participantId);
+
+            if (participant == null)
+                return NotFound();
+
+            // Удаляем сначала связанные ответы
+            _context.Answers.RemoveRange(participant.Answers);
+
+            // Затем удаляем самого участника
+            _context.Participants.Remove(participant);
+
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Участник успешно удалён.";
+            return RedirectToAction("Details", new { id = participant.SurveyId });
+        }
+
+
+
+
+
 
     }
 }

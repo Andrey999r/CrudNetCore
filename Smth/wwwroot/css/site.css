@@ -247,18 +247,20 @@ body {
 
 .create-survey-link {
   display: inline-block;
-  color: #4bc0c0;
-  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 18px;
   font-weight: bold;
-  border: 1px solid #4bc0c0;
-  padding: 8px 15px;
-  border-radius: 4px;
-  transition: background 0.2s;
+  color: #00bfa5;
+  border: 2px solid #00bfa5;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
 }
 
 .create-survey-link:hover {
-  background: #4bc0c0;
-  color: #222;
+  background-color: #00bfa5;
+  color: white;
 }
 
 .no-surveys {
@@ -270,29 +272,23 @@ body {
 
 .surveys-table {
   width: 100%;
-  border-collapse: collapse;
-  background: #2c2c2c;
-  border: 1px solid #444;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  border-radius: 4px;
-  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Отступ между строками */
 }
 
 .surveys-table thead {
   background: #3c3c3c;
 }
 
-.surveys-table th,
-.surveys-table td {
-  padding: 15px;
+.surveys-table th, .surveys-table td {
+  padding: 12px 20px;
   text-align: left;
-  font-size: 0.95em;
 }
 
 .surveys-table th {
-  font-weight: normal;
-  color: #aaa;
-  border-bottom: 1px solid #444;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
 }
 
 .surveys-table tr:not(:last-child) td {
@@ -305,15 +301,13 @@ body {
 }
 
 .action-link {
-  color: #4bc0c0;
+  color: #00bfa5;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
+  margin-right: 15px;
 }
 
 .action-link:hover {
   text-decoration: underline;
-  color: #38a6a6;
 }
 body {
   margin: 0;
@@ -557,3 +551,38 @@ body {
 .answers-list li strong {
   color: #fff;
 }
+.participant {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #333;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.participant-name {
+  font-weight: bold;
+  color: #fff;
+}
+
+.email-text {
+  color: #bbb;
+}
+
+.email-input {
+  display: none;
+  width: 150px;
+  padding: 4px;
+}
+
+.btn-edit, .btn-save, .btn-cancel, .btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-edit i { color: #67BA80; }
+.btn-save i { color: #4CAF50; }
+.btn-cancel i { color: #FF5722; }
+.btn-delete i { color: #F44336; }

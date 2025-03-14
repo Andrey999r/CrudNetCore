@@ -28,23 +28,44 @@ namespace Smth.Services
                 Username = username,
                 Email = email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(password)
+                
             };
-
+            
             _context.Users.Add(user);
             _context.SaveChanges();
 
             return user;
         }
 
-        public ApplicationUser Login(string login, string password)
+        public ApplicationUser Login(string username, string password)
         {
             var user = _context.Users.FirstOrDefault(u => 
-                u.Username == login || u.Email == login);
+        u.Username == username || u.Email == username);
+        var users = _context.Users.ToList(); 
+        Console.WriteLine($"В БД пользователей: {users.Count}");
+        foreach (var u in users)
+        {
+            Console.WriteLine($"User: {u.Username}, Email: {u.Email}");
+        }
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-                return null;
+        Console.WriteLine("Найден пользователь: " + user.Username);
+        Console.WriteLine("Хранимый хеш: " + user.PasswordHash);
+        Console.WriteLine("Введенный пароль: " + password);
+        if (user == null)
+        {
+            Console.WriteLine("Пользователь не найден: " + username);
+            return null;
+        }
+    
 
-            return user;
+        if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+        {
+            Console.WriteLine("Пароль не прошел верификацию");
+            return null;
+        }
+
+        Console.WriteLine("Успешный вход");
+        return user;
         }
     }
 }

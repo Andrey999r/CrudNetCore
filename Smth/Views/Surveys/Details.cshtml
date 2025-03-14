@@ -1,44 +1,117 @@
 @model Smth.ViewModel.SurveyDetailsViewModel
 
 @{
-ViewBag.Title = Model.Name;
+    ViewBag.Title = Model.Name;
 }
 
-<h2 class="page-title">@Model.Name</h2>
+<div class="survey-container">
+    <h2 class="survey-title">@Model.Name</h2>
+    
+    <div class="survey-card">
+        <p class="survey-description">@Model.Description</p>
+    </div>
 
-<div class="survey-details-container">
-    <p class="survey-details-description">@Model.Description</p>
+    <div class="participants-card">
+        <h3 class="participants-title">Участники:</h3>
 
-    <h3 class="participants-title">Участники:</h3>
-
-    @if (Model.Participants == null || !Model.Participants.Any())
-    {
-    <p class="no-participants">Пока никто не прошёл этот опрос.</p>
-    }
-    else
-    {
-    <div class="participants-list">
-        @foreach (var p in Model.Participants)
+        @if (Model.Participants == null || !Model.Participants.Any())
         {
-        <div class="participant-block">
-            <h4 class="participant-name">@p.ParticipantName</h4>
-            @if (p.Answers == null || !p.Answers.Any())
-            {
-            <p class="no-answers">Нет ответов</p>
-            }
-            else
-            {
-            <ul class="answers-list">
-                @foreach (var a in p.Answers)
+            <p class="no-participants">Пока никто не прошёл этот опрос.</p>
+        }
+        else
+        {
+            <ul class="participants-list">
+                @foreach (var p in Model.Participants)
                 {
-                <li><strong>@a.Text</strong>: @a.ResponseText</li>
+                    <li class="participant">
+                        <a href="@Url.Action("Info", "Surveys", new { participantId = p.Id })">
+                            <strong>@p.ParticipantName</strong> - <span>@p.Email</span>
+                        </a>
+
+                        <form method="post" asp-action="DeleteParticipant" asp-controller="Surveys"
+                              onsubmit="return confirm('Вы уверены, что хотите удалить участника?');" 
+                              class="delete-form">
+                            <input type="hidden" name="participantId" value="@p.Id" />
+                            <button type="submit" class="delete-btn">🗑</button>
+                        </form>
+                    </li>
                 }
             </ul>
-            }
-        </div>
         }
     </div>
-    }
 </div>
 
+<style>
+    .survey-container {
+        max-width: 600px;
+        margin: auto;
+        text-align: center;
+        color: #ddd;
+    }
 
+    .survey-title {
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .survey-card, .participants-card {
+        background-color: #222;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .survey-description {
+        color: #aaa;
+    }
+
+    .participants-title {
+        color: white;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .no-participants {
+        color: #888;
+    }
+
+    .participants-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .participant {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #333;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 5px 0;
+    }
+
+    .participant a {
+        color: #67BA80;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .delete-form {
+        display: inline;
+    }
+
+    .delete-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #ff4d4d;
+        transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+        color: #ff1a1a;
+    }
+</style>

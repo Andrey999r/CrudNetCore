@@ -1,40 +1,41 @@
 ﻿@model List<Smth.Data.Survey>
 
 @{
-ViewBag.Title = "Мои опросы";
+    ViewBag.Title = "Мои опросы";
 }
 
 <h1 class="page-title">Мои опросы</h1>
 
-<div class="actions-bar">
-    <a class="create-survey-link" href="/Surveys/Create">Создать опрос</a>
+<div class="tab-container">
+    <a href="/Surveys/Created" class="tab-button @(ViewBag.ActiveTab == "Created" ? "active" : "")">Созданные</a>
+    <a href="/Surveys/Completed" class="tab-button @(ViewBag.ActiveTab == "Completed" ? "active" : "")">Пройденные</a>
 </div>
-
-@if (Model == null || !Model.Any())
-{
-<p class="no-surveys">Пока нет созданных опросов.</p>
-}
-else
-{
-<table class="surveys-table">
-    <thead>
-    <tr>
-        <th>Название</th>
-        <th>Действия</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var s in Model)
-    {
-    <tr>
-        <td>@s.Name</td>
-        <td class="actions-cell">
-            <a href="/Surveys/Delete/@s.Id" class="action-link">Удалить</a>
-            <a href="/Surveys/Share/@s.Id" class="action-link">Поделиться</a>
-            <a href="/Surveys/Details/@s.Id" class="action-link">Детали</a>
-        </td>
-    </tr>
+<style>
+    .tab-container {
+        display: flex;
+        justify-content: center; /* Центрирование по горизонтали */
+        gap: 20px;
+        margin-top: 20px;
     }
-    </tbody>
-</table>
-}
+
+    .tab-button {
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        background-color: #4CAF50;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .tab-button:hover {
+        background-color: #45a049;
+    }
+
+    .active {
+        background-color: #2E7D32;
+    }
+</style>
+

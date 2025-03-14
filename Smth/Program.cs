@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Smth.Data;
 using Smth.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,10 +48,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddScoped<IAuth, AuthService>();
 builder.Services.AddScoped<IJwt, JwtService>();
-
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 

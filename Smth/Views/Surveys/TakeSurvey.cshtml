@@ -8,17 +8,19 @@
 <div class="survey-container">
     <p class="survey-description">@Model.Description</p>
 
-    <form method="post" class="survey-form">
-        <input type="text" name="participantName" placeholder="Ваше имя" class="survey-input" required />
+  <form method="post" class="survey-form">
+    <input type="text" name="participantName" placeholder="Ваше имя" class="survey-input" required />
+    <input type="email" name="participantEmail" placeholder="Ваш email" class="survey-input" required />
 
-        @foreach(var q in Model.Questions)
-        {
-            <div class="question-block">
-                <p class="question-text">@q.Text</p>
-                <input type="text" name="answers" class="survey-input" required />
-            </div>
-        }
+    @foreach(var q in Model.Questions)
+    {
+        <div class="question-block">
+            <p class="question-text">@q.Text</p>
+            <input type="text" name="answers" class="survey-input" required />
+        </div>
+    }
 
-        <input type="submit" value="Отправить ответы" class="survey-submit" />
-    </form>
+    <input type="submit" value="Отправить ответы" class="survey-submit" />
+</form>
+
 </div>

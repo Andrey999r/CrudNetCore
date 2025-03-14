@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZRvEVKmnyKDXMB/VQnszNlEXsKKJIcdsoDT8yLdcj48=",
+  "Hash": "NfFsTDJdHHROzf+gTEMZry83vGMPoX70NDdZg2ZFQDY=",
   "Source": "Smth",
   "BasePath": "_content/Smth",
   "Mode": "Default",
@@ -73,8 +73,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "8eg341kj6h",
-      "Integrity": "wJ15JXuEQnUOmmuCac70bu0NRIONrK1xOqofmKLwi/0=",
+      "Fingerprint": "kp8ps80l5s",
+      "Integrity": "WPRET2psOXQD/c4XWfNcRNuFHxWspndbttF2aPKrwhg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -115,8 +115,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "xtxxf3hu2r",
-      "Integrity": "hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=",
+      "Fingerprint": "lhw3pzzq1a",
+      "Integrity": "OZzCqfI8PSd74QSaIPIFOnfkMWm1YdXRlwjctI+iQ+k=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
@@ -1321,51 +1321,6 @@
   ],
   "Endpoints": [
     {
-      "Route": "css/site.8eg341kj6h.css",
-      "AssetFile": "C:\\Users\\gyman\\RiderProjects\\CrudNetCore\\Smth\\wwwroot\\css\\site.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "9294"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"wJ15JXuEQnUOmmuCac70bu0NRIONrK1xOqofmKLwi/0=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 14 Dec 2024 09:25:50 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "8eg341kj6h"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-wJ15JXuEQnUOmmuCac70bu0NRIONrK1xOqofmKLwi/0="
-        }
-      ]
-    },
-    {
       "Route": "css/site.css",
       "AssetFile": "C:\\Users\\gyman\\RiderProjects\\CrudNetCore\\Smth\\wwwroot\\css\\site.css",
       "Selectors": [],
@@ -1376,7 +1331,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9294"
+          "Value": "9794"
         },
         {
           "Name": "Content-Type",
@@ -1384,11 +1339,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"wJ15JXuEQnUOmmuCac70bu0NRIONrK1xOqofmKLwi/0=\""
+          "Value": "\"WPRET2psOXQD/c4XWfNcRNuFHxWspndbttF2aPKrwhg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Dec 2024 09:25:50 GMT"
+          "Value": "Fri, 14 Mar 2025 10:00:11 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1398,7 +1353,52 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-wJ15JXuEQnUOmmuCac70bu0NRIONrK1xOqofmKLwi/0="
+          "Value": "sha256-WPRET2psOXQD/c4XWfNcRNuFHxWspndbttF2aPKrwhg="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.kp8ps80l5s.css",
+      "AssetFile": "C:\\Users\\gyman\\RiderProjects\\CrudNetCore\\Smth\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9794"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WPRET2psOXQD/c4XWfNcRNuFHxWspndbttF2aPKrwhg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 14 Mar 2025 10:00:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "kp8ps80l5s"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WPRET2psOXQD/c4XWfNcRNuFHxWspndbttF2aPKrwhg="
         }
       ]
     },
@@ -1495,7 +1495,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "231"
+          "Value": "1287"
         },
         {
           "Name": "Content-Type",
@@ -1503,11 +1503,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=\""
+          "Value": "\"OZzCqfI8PSd74QSaIPIFOnfkMWm1YdXRlwjctI+iQ+k=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Dec 2024 09:25:50 GMT"
+          "Value": "Wed, 12 Mar 2025 09:18:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1517,12 +1517,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo="
+          "Value": "sha256-OZzCqfI8PSd74QSaIPIFOnfkMWm1YdXRlwjctI+iQ+k="
         }
       ]
     },
     {
-      "Route": "js/site.xtxxf3hu2r.js",
+      "Route": "js/site.lhw3pzzq1a.js",
       "AssetFile": "C:\\Users\\gyman\\RiderProjects\\CrudNetCore\\Smth\\wwwroot\\js\\site.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -1532,7 +1532,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "231"
+          "Value": "1287"
         },
         {
           "Name": "Content-Type",
@@ -1540,11 +1540,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=\""
+          "Value": "\"OZzCqfI8PSd74QSaIPIFOnfkMWm1YdXRlwjctI+iQ+k=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Dec 2024 09:25:50 GMT"
+          "Value": "Wed, 12 Mar 2025 09:18:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1554,7 +1554,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "xtxxf3hu2r"
+          "Value": "lhw3pzzq1a"
         },
         {
           "Name": "label",
@@ -1562,7 +1562,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo="
+          "Value": "sha256-OZzCqfI8PSd74QSaIPIFOnfkMWm1YdXRlwjctI+iQ+k="
         }
       ]
     },
@@ -6263,7 +6263,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Dec 2024 10:06:08 GMT"
+          "Value": "Fri, 14 Mar 2025 15:51:35 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6308,7 +6308,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Dec 2024 10:06:08 GMT"
+          "Value": "Fri, 14 Mar 2025 15:51:35 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6353,7 +6353,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Dec 2024 10:06:08 GMT"
+          "Value": "Fri, 14 Mar 2025 15:51:35 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6390,7 +6390,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 14 Dec 2024 10:06:08 GMT"
+          "Value": "Fri, 14 Mar 2025 15:51:35 GMT"
         },
         {
           "Name": "Cache-Control",

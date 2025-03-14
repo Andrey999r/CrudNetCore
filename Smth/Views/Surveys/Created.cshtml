@@ -1,0 +1,94 @@
+
+@model List<Smth.Data.Survey>
+@{
+    ViewBag.ActiveTab = "Created";
+    ViewBag.Title = "Созданные опросы";
+}
+
+<h2>Созданные опросы</h2>
+<a class="create-survey-link" href="/Surveys/Create">Создать опрос</a>
+
+@if (!Model.Any())
+{
+    <p class="no-surveys">Пока нет созданных опросов.</p>
+}
+else
+{
+    <table class="surveys-table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var survey in Model)
+            {
+                <tr>
+                    <td>@survey.Name</td>
+                    <td>
+                        <a href="/Surveys/Delete/@survey.Id" class="action-link">Удалить</a>
+                        <a href="/Surveys/Share/@survey.Id" class="action-link">Поделиться</a>
+                        <a href="/Surveys/Details/@survey.Id" class="action-link">Детали</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<style>
+    .create-survey-link {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #00bfa5;
+        border: 2px solid #00bfa5;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-bottom: 15px;
+    }
+
+    .create-survey-link:hover {
+        background-color: #00bfa5;
+        color: white;
+    }
+
+    .surveys-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px; /* Отступ между строками */
+    }
+
+    .surveys-table th, .surveys-table td {
+        padding: 12px 20px;
+        text-align: left;
+    }
+
+    .surveys-table th {
+        background-color: #333;
+        color: white;
+        font-size: 16px;
+    }
+
+    .surveys-table td {
+        background-color: #222;
+        color: #ddd;
+        border-radius: 5px;
+    }
+
+    .action-link {
+        color: #00bfa5;
+        text-decoration: none;
+        margin-right: 15px;
+    }
+
+    .action-link:last-child {
+        margin-right: 0;
+    }
+
+    .action-link:hover {
+        text-decoration: underline;
+    }
+</style>

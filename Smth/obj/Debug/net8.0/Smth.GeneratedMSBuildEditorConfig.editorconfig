@@ -52,16 +52,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Completed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xDb21wbGV0ZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Created.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xDcmVhdGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/DeleteParticipant.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xEZWxldGVQYXJ0aWNpcGFudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Info.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xJbmZvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Share.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xTaGFyZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/ShareSurveyResult.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xTaGFyZVN1cnZleVJlc3VsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/TakeSurvey.cshtml]
