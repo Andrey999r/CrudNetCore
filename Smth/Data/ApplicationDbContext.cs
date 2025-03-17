@@ -16,11 +16,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Answer>()
-            .HasOne(a => a.Participant)
-            .WithMany(p => p.Answers)
-            .HasForeignKey(a => a.ParticipantId)
-            .OnDelete(DeleteBehavior.Cascade); // Включаем каскадное удаление
+    
     }
 
 }

@@ -75,12 +75,25 @@ namespace Smth.Controllers
         public IActionResult Completed()
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+            if (userId == null)
+                return RedirectToAction("Login", "Account");
 
-            string userEmail = User.Identity.Name; // Или другой способ получения текущего email
+            int parsedUserId = int.Parse(userId);
+            var userEmail = _context.Users
+                .Where(u => u.Id == parsedUserId)
+                .Select(u => u.Email)
+                .FirstOrDefault();
+
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return BadRequest("Не удалось получить email пользователя.");
+            }
 
             var completedSurveys = _context.Surveys
                 .Include(s => s.Owner) // Загружаем владельца
                 .Include(s => s.Participants) // Загружаем участников
+                .ThenInclude(p => p.Answers) // Загружаем ответы
+                .ThenInclude(a => a.Question) // Загружаем вопросы
                 .Where(s => s.Participants.Any(p => p.Email == userEmail)) // Ищем опросы, где есть участник с нашим email
                 .ToList();
 
@@ -88,9 +101,6 @@ namespace Smth.Controllers
 
             return View(completedSurveys);
         }
-
-
-
         public IActionResult Details(int id)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
@@ -110,6 +120,7 @@ namespace Smth.Controllers
                         Id = p.Id, // добавляем Id!
                         ParticipantName = p.ParticipantName,
                         Email = p.Email, // добавляем Email!
+
                         Answers = p.Answers.Select(a => new AnswerViewModel
                         {
                             Text = a.Question.Text,
@@ -150,7 +161,7 @@ namespace Smth.Controllers
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Created", "Surveys");
         }
 
         public IActionResult Share(int id)
@@ -239,16 +250,18 @@ namespace Smth.Controllers
             {
                 return BadRequest("Вы не ответили ни на один вопрос.");
             }
+
             bool isSelfCompleted = survey.Owner?.Email == participantEmail;
             var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
             int.TryParse(userId, out int currentUserId);
+
             // Создаём участника с Email
             var participant = new Participant
             {
                 ParticipantName = participantName ?? "Аноним",
                 Email = participantEmail, // Указываем Email, чтобы не было NULL
                 SurveyId = id,
-                CompletedAt = DateTime.UtcNow
+            CompletedAt = DateTime.UtcNow.AddHours(3) // Время по Москве (UTC+3)
             };
 
             _context.Participants.Add(participant);
@@ -271,11 +284,20 @@ namespace Smth.Controllers
             }
 
             _context.SaveChanges();
+
             if (isSelfCompleted)
             {
                 TempData["SelfCompleted"] = "Вы прошли свой же опрос!";
             }
-            return RedirectToAction("Completed", "Surveys"); // После прохождения редирект в "Пройденные"
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Completed", "Surveys"); // После прохождения редирект в "Пройденные"
+            }
+            else
+            {
+return RedirectToAction("ThankYou", "Surveys", new { participantName = participant.ParticipantName });
+            }
         }
 
 
@@ -348,7 +370,38 @@ namespace Smth.Controllers
             return RedirectToAction("Details", new { id = participant.SurveyId });
         }
 
+        public IActionResult InfoSurvey(int participantId)
+        {
+            var participant = _context.Participants
+                .Include(p => p.Survey) // Загружаем сам опрос
+                .Include(p => p.Answers)
+                .ThenInclude(a => a.Question) // Загружаем вопросы
+                .FirstOrDefault(p => p.Id == participantId);
 
+            if (participant == null)
+                return NotFound("Участник не найден.");
+
+            var viewModel = new ParticipantViewModel
+            {
+                Id = participant.Id,
+                ParticipantName = participant.ParticipantName,
+                Email = participant.Email,
+                SurveyName = participant.Survey?.Name ?? "Неизвестный опрос",
+                Answers = participant.Answers.Select(a => new AnswerViewModel
+                {
+                    Text = a.Question?.Text ?? "Нет данных",
+                    ResponseText = a.ResponseText
+                }).ToList()
+            };
+
+            return View(viewModel);
+        }
+[AllowAnonymous] // Разрешаем доступ без авторизации
+public IActionResult ThankYou(string participantName)
+{
+    ViewBag.ParticipantName = participantName;
+    return View();
+}
 
 
 

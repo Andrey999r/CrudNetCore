@@ -1,0 +1,31 @@
+@model Smth.ViewModel.ParticipantViewModel
+@{
+    ViewBag.Title = "Детали пройденного опроса";
+}
+
+<h2>Опрос: @Model.SurveyName</h2>
+
+<div class="participant-info">
+    <p><strong>Имя участника:</strong> @Model.ParticipantName</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+</div>
+
+<h3>Ответы:</h3>
+
+@if (!Model.Answers.Any())
+{
+    <p>Ответов не найдено.</p>
+}
+else
+{
+    <ul>
+        @foreach (var answer in Model.Answers)
+        {
+            <li>
+                <strong>@answer.Text:</strong> @answer.ResponseText
+            </li>
+        }
+    </ul>
+}
+
+<a href="@Url.Action("Completed", "Surveys")" class="btn btn-secondary">Назад к списку</a>

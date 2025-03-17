@@ -1,0 +1,33 @@
+@{
+    ViewBag.Title = "Спасибо за участие!";
+}
+
+<div class="thank-you-container">
+    <h2>Спасибо за участие, @ViewBag.ParticipantName!</h2>
+    <p>Ваши ответы сохранены.</p>
+    
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">На главную</a>
+</div>
+
+<style>
+    .thank-you-container {
+        text-align: center;
+        margin-top: 50px;
+    }
+    
+    .thank-you-container h2 {
+        color: #67BA80;
+    }
+    
+    .btn-primary {
+        background-color: #67BA80;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    
+    .btn-primary:hover {
+        background-color: #5aa470;
+    }
+</style>

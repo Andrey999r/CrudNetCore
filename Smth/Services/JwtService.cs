@@ -22,6 +22,7 @@ public class JwtService : IJwt
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Username),
             new Claim("UserId", user.Id.ToString()), 
+
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

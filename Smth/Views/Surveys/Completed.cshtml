@@ -18,6 +18,7 @@ else
                 <th>Название</th>
                 <th>Дата прохождения</th>
                 <th>Статус</th>
+                <th>Действие</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,11 @@ else
                             {
                                 <span class="completed-by-others">Полученный опрос</span>
                             }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("InfoSurvey", "Surveys", new { participantId = participant.Id })" class="btn btn-primary">
+                                Посмотреть ответы
+                            </a>
                         </td>
                     </tr>
                 }

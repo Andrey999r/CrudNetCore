@@ -6,7 +6,7 @@
 
 <div class="survey-container">
     <h2 class="survey-title">@Model.Name</h2>
-    
+
     <div class="survey-card">
         <p class="survey-description">@Model.Description</p>
     </div>
@@ -27,6 +27,7 @@
                         <a href="@Url.Action("Info", "Surveys", new { participantId = p.Id })">
                             <strong>@p.ParticipantName</strong> - <span>@p.Email</span>
                         </a>
+                        <span class="completed-date">@p.CompletedAt.ToString("dd.MM.yyyy HH:mm")</span>
 
                         <form method="post" asp-action="DeleteParticipant" asp-controller="Surveys"
                               onsubmit="return confirm('Вы уверены, что хотите удалить участника?');" 
@@ -96,6 +97,12 @@
         color: #67BA80;
         text-decoration: none;
         font-weight: bold;
+    }
+
+    .completed-date {
+        color: #67BA80;
+        font-size: 14px;
+        margin-left: 10px;
     }
 
     .delete-form {
