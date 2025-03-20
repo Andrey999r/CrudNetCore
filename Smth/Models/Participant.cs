@@ -13,5 +13,6 @@ public class Participant
     public int SurveyId { get; set; }
     public Survey Survey { get; set; }
 
+
     public List<Answer> Answers { get; set; } = new List<Answer>();
 }

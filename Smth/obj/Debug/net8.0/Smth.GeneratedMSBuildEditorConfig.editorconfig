@@ -17,93 +17,91 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Smth
 build_property.RootNamespace = Smth
-build_property.ProjectDir = C:\Users\gyman\RiderProjects\CrudNetCore\Smth\
+build_property.ProjectDir = /Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\gyman\RiderProjects\CrudNetCore\Smth
+build_property.MSBuildProjectDirectory = /Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth
 build_property._RazorSourceGeneratorDebug = 
-build_property.EffectiveAnalysisLevelStyle = 8.0
-build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Account/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Account/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Completed.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xDb21wbGV0ZWQuY3NodG1s
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/Completed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9Db21wbGV0ZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xDcmVhdGUuY3NodG1s
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9DcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Created.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xDcmVhdGVkLmNzaHRtbA==
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/Created.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9DcmVhdGVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/DeleteParticipant.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xEZWxldGVQYXJ0aWNpcGFudC5jc2h0bWw=
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/DeleteParticipant.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9EZWxldGVQYXJ0aWNpcGFudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xEZXRhaWxzLmNzaHRtbA==
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9EZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Info.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xJbmZvLmNzaHRtbA==
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/Info.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9JbmZvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/InfoSurvey.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xJbmZvU3VydmV5LmNzaHRtbA==
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/InfoSurvey.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9JbmZvU3VydmV5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/Share.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xTaGFyZS5jc2h0bWw=
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/Share.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9TaGFyZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/ShareSurveyResult.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xTaGFyZVN1cnZleVJlc3VsdC5jc2h0bWw=
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/ShareSurveyResult.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9TaGFyZVN1cnZleVJlc3VsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/TakeSurvey.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xUYWtlU3VydmV5LmNzaHRtbA==
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/TakeSurvey.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9UYWtlU3VydmV5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Surveys/ThankYou.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VydmV5c1xUaGFua1lvdS5jc2h0bWw=
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Surveys/ThankYou.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VydmV5cy9UaGFua1lvdS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gyman/RiderProjects/CrudNetCore/Smth/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-jimexezxqm
+[/Users/kustovandrey/Desktop/Crudcore/CrudNetCore/Smth/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-hle4i4hwxk

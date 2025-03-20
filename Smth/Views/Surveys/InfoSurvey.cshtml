@@ -18,14 +18,23 @@
 }
 else
 {
-    <ul>
-        @foreach (var answer in Model.Answers)
-        {
-            <li>
-                <strong>@answer.Text:</strong> @answer.ResponseText
-            </li>
-        }
-    </ul>
+    <table class="surveys-table">
+        <thead>
+            <tr>
+                <th>Вопрос</th>
+                <th>Ответ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var answer in Model.Answers)
+            {
+                <tr>
+                    <td><strong>@answer.Text</strong></td>
+                    <td>@answer.ResponseText</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
-<a href="@Url.Action("Completed", "Surveys")" class="btn btn-secondary">Назад к списку</a>
+<a href="@Url.Action("Completed", "Surveys")" class="create-survey-link">Назад к списку</a>

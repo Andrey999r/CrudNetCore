@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
@@ -75,10 +75,8 @@ namespace Smth.Controllers
         public IActionResult Completed()
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
-            if (userId == null)
-                return RedirectToAction("Login", "Account");
+            int.TryParse(userId, out int parsedUserId);
 
-            int parsedUserId = int.Parse(userId);
             var userEmail = _context.Users
                 .Where(u => u.Id == parsedUserId)
                 .Select(u => u.Email)
@@ -94,7 +92,7 @@ namespace Smth.Controllers
                 .Include(s => s.Participants) // Загружаем участников
                 .ThenInclude(p => p.Answers) // Загружаем ответы
                 .ThenInclude(a => a.Question) // Загружаем вопросы
-                .Where(s => s.Participants.Any(p => p.Email == userEmail)) // Ищем опросы, где есть участник с нашим email
+                .Where(s => s.Participants.Any(p => p.Email == userEmail || p.Email == userEmail)) // Проверяем и email
                 .ToList();
 
             ViewBag.UserEmail = userEmail;
@@ -120,7 +118,7 @@ namespace Smth.Controllers
                         Id = p.Id, // добавляем Id!
                         ParticipantName = p.ParticipantName,
                         Email = p.Email, // добавляем Email!
-
+                        CompletedAt= p.CompletedAt,
                         Answers = p.Answers.Select(a => new AnswerViewModel
                         {
                             Text = a.Question.Text,
@@ -223,11 +221,6 @@ namespace Smth.Controllers
                 })
                 .FirstOrDefault();
 
-            if (survey == null)
-            {
-                return NotFound("Опрос не найден.");
-            }
-
             return View(survey);
         }
 
@@ -241,43 +234,46 @@ namespace Smth.Controllers
                 return NotFound("Опрос не найден.");
             }
 
-            if (string.IsNullOrWhiteSpace(participantEmail))
-            {
-                return BadRequest("Не указан email участника.");
-            }
-
             if (answers == null || answers.Length == 0)
             {
                 return BadRequest("Вы не ответили ни на один вопрос.");
             }
 
-            bool isSelfCompleted = survey.Owner?.Email == participantEmail;
             var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
             int.TryParse(userId, out int currentUserId);
+            
+            var userEmail = _context.Users
+                .Where(u => u.Id == currentUserId)
+                .Select(u => u.Email)
+                .FirstOrDefault();
 
-            // Создаём участника с Email
-            var participant = new Participant
+            // Проверяем, есть ли уже участие от этого пользователя
+            var existingParticipant = _context.Participants
+                .FirstOrDefault(p => p.SurveyId == id && (p.Email == userEmail || p.Email == participantEmail));
+
+            if (existingParticipant == null)
             {
-                ParticipantName = participantName ?? "Аноним",
-                Email = participantEmail, // Указываем Email, чтобы не было NULL
-                SurveyId = id,
-            CompletedAt = DateTime.UtcNow.AddHours(3) // Время по Москве (UTC+3)
-            };
+                existingParticipant = new Participant
+                {
+                    ParticipantName = participantName ?? "Аноним",
+                    Email = userEmail ?? participantEmail, // Если пользователь авторизован, используем его email
+                    SurveyId = id,
+                    CompletedAt = DateTime.UtcNow.AddHours(3)
+                };
 
-            _context.Participants.Add(participant);
-            _context.SaveChanges();
+                _context.Participants.Add(existingParticipant);
+                _context.SaveChanges();
+            }
 
-            // Получаем вопросы этого опроса
             var surveyQuestions = _context.Questions
                 .Where(q => q.SurveyId == id)
                 .ToList();
 
-            // Сохраняем ответы
             for (int i = 0; i < surveyQuestions.Count && i < answers.Length; i++)
             {
                 _context.Answers.Add(new Answer
                 {
-                    ParticipantId = participant.Id,
+                    ParticipantId = existingParticipant.Id,
                     QuestionId = surveyQuestions[i].Id,
                     ResponseText = answers[i]
                 });
@@ -285,19 +281,9 @@ namespace Smth.Controllers
 
             _context.SaveChanges();
 
-            if (isSelfCompleted)
-            {
-                TempData["SelfCompleted"] = "Вы прошли свой же опрос!";
-            }
-
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Completed", "Surveys"); // После прохождения редирект в "Пройденные"
-            }
-            else
-            {
-return RedirectToAction("ThankYou", "Surveys", new { participantName = participant.ParticipantName });
-            }
+            return User.Identity.IsAuthenticated
+                ? RedirectToAction("Completed", "Surveys")
+                : RedirectToAction("ThankYou", "Surveys", new { participantName = existingParticipant.ParticipantName });
         }
 
 
