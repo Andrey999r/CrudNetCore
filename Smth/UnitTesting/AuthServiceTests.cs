@@ -1,148 +1,105 @@
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using Smth.Data;
 using Smth.Services;
 using Xunit;
 
-public class AuthServiceTests : IDisposable
+public class AuthServiceTests
 {
-    private readonly ApplicationDbContext _context;
-    private readonly AuthService _authService;
-
-    public AuthServiceTests()
+    private ApplicationDbContext GetInMemoryContext(string dbName)
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .UseInMemoryDatabase(databaseName: dbName)
             .Options;
-        _context = new ApplicationDbContext(options);
-        _authService = new AuthService(_context);
+        return new ApplicationDbContext(options);
+    }
+    [Fact]
+    public void Register_InvalidEmail_ThrowsException()
+    {
+        // Arrange
+        var context = GetInMemoryContext("TestDb_InvalidEmail");
+        var authService = new AuthService(context);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() =>
+            authService.Register("user1", "invalid-email", "Password123!")
+        );
     }
 
     [Fact]
-    public void Register_ValidUser_ShouldReturnUser()
+    public void Register_ShortPassword_ThrowsException()
     {
         // Arrange
-        string username = "testuser";
-        string email = "test@example.com";
-        string password = "Test@123";
+        var context = GetInMemoryContext("TestDb_ShortPassword");
+        var authService = new AuthService(context);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() =>
+            authService.Register("user1", "test@mail.com", "123")
+        );
+    }
+
+    [Fact]
+    public void Login_InvalidPassword_ThrowsException()
+    {
+        // Arrange
+        var context = GetInMemoryContext("TestDb_InvalidPassword");
+        var authService = new AuthService(context);
+        authService.Register("user1", "test@mail.com", "Password123!");
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() =>
+            authService.Login("user1", "WrongPassword!")
+        );
+    }
+
+    [Fact]
+    public void Login_NonExistentUser_ThrowsException()
+    {
+        // Arrange
+        var context = GetInMemoryContext("TestDb_NonExistentUser");
+        var authService = new AuthService(context);
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() =>
+            authService.Login("ghost", "Password123!")
+        );
+    }
+    [Fact]
+    public void Register_ValidData_CreatesUser()
+    {
+        // Arrange
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDb_Register")
+            .Options;
+
+        using var context = new ApplicationDbContext(options);
+        var authService = new AuthService(context);
 
         // Act
-        var user = _authService.Register(username, email, password);
+        var user = authService.Register("testUser", "test@mail.com", "Password123!");
 
         // Assert
         Assert.NotNull(user);
-        Assert.Equal(username, user.Username);
-        Assert.Equal(email, user.Email);
-        Assert.True(BCrypt.Net.BCrypt.Verify(password, user.PasswordHash));
-        Assert.Single(_context.Users);
+        Assert.Equal("test@mail.com", user.Email);
+        Assert.True(BCrypt.Net.BCrypt.Verify("Password123!", user.PasswordHash));
     }
 
     [Fact]
-    public void Register_ExistingUsername_ShouldThrowException()
+    public void Register_DuplicateEmail_ThrowsException()
     {
         // Arrange
-        string username = "existinguser";
-        string email = "existing@example.com";
-        string password = "Test@123";
-        
-        _authService.Register(username, "other@email.com", password);
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDb_Duplicate")
+            .Options;
+
+        using var context = new ApplicationDbContext(options);
+        var authService = new AuthService(context);
+        authService.Register("user1", "duplicate@mail.com", "Password123!");
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidOperationException>(
-            () => _authService.Register(username, email, password));
-        
-        Assert.Equal("Логин уже занят.", exception.Message);
-        Assert.Single(_context.Users);
-    }
-
-    [Fact]
-    public void Register_ExistingEmail_ShouldThrowException()
-    {
-        // Arrange
-        string email = "existing@example.com";
-        string password = "Test@123";
-        
-        _authService.Register("user1", email, password);
-
-        // Act & Assert
-        var exception = Assert.Throws<InvalidOperationException>(
-            () => _authService.Register("user2", email, password));
-        
-        Assert.Equal("Email уже зарегистрирован.", exception.Message);
-        Assert.Single(_context.Users);
-    }
-
-    [Fact]
-    public void Login_ByUsername_ValidCredentials_ShouldReturnUser()
-    {
-        // Arrange
-        string username = "loginuser";
-        string email = "login@example.com";
-        string password = "Login@123";
-        _authService.Register(username, email, password);
-
-        // Act
-        var result = _authService.Login(username, password);
-
-        // Assert
-        Assert.NotNull(result);
-        Assert.Equal(username, result.Username);
-    }
-
-    [Fact]
-    public void Login_ByEmail_ValidCredentials_ShouldReturnUser()
-    {
-        // Arrange
-        string username = "loginuser";
-        string email = "login@example.com";
-        string password = "Login@123";
-        _authService.Register(username, email, password);
-
-        // Act
-        var result = _authService.Login(email, password);
-
-        // Assert
-        Assert.NotNull(result);
-        Assert.Equal(username, result.Username);
-    }
-
-    [Fact]
-    public void Login_InvalidPassword_ShouldReturnNull()
-    {
-        // Arrange
-        string username = "loginuser2";
-        string email = "login2@example.com";
-        string password = "Login@123";
-        _authService.Register(username, email, password);
-
-        // Act
-        var result = _authService.Login(username, "WrongPassword");
-
-        // Assert
-        Assert.Null(result);
-    }
-
-    [Fact]
-    public void Login_NonExistingLogin_ShouldReturnNull()
-    {
-        // Act
-        var result = _authService.Login("nonexisting", "SomePassword");
-
-        // Assert
-        Assert.Null(result);
-    }
-
-    [Fact]
-    public void Login_InvalidEmailFormat_ShouldReturnNull()
-    {
-        // Act
-        var result = _authService.Login("notanemail", "SomePassword");
-
-        // Assert
-        Assert.Null(result);
-    }
-
-    public void Dispose()
-    {
-        _context.Dispose();
+        Assert.Throws<InvalidOperationException>(() =>
+            authService.Register("user2", "duplicate@mail.com", "Password456!")
+        );
     }
 }

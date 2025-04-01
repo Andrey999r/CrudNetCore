@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +13,7 @@ using Smth.ViewModel;
 namespace Smth.Controllers
 {
     [Authorize]
+
     public class SurveysController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -118,7 +119,7 @@ namespace Smth.Controllers
                         Id = p.Id, // добавляем Id!
                         ParticipantName = p.ParticipantName,
                         Email = p.Email, // добавляем Email!
-                        CompletedAt= p.CompletedAt,
+                        CompletedAt = p.CompletedAt,
                         Answers = p.Answers.Select(a => new AnswerViewModel
                         {
                             Text = a.Question.Text,
@@ -241,7 +242,7 @@ namespace Smth.Controllers
 
             var userId = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
             int.TryParse(userId, out int currentUserId);
-            
+
             var userEmail = _context.Users
                 .Where(u => u.Id == currentUserId)
                 .Select(u => u.Email)
@@ -382,12 +383,12 @@ namespace Smth.Controllers
 
             return View(viewModel);
         }
-[AllowAnonymous] // Разрешаем доступ без авторизации
-public IActionResult ThankYou(string participantName)
-{
-    ViewBag.ParticipantName = participantName;
-    return View();
-}
+        [AllowAnonymous] // Разрешаем доступ без авторизации
+        public IActionResult ThankYou(string participantName)
+        {
+            ViewBag.ParticipantName = participantName;
+            return View();
+        }
 
 
 

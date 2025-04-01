@@ -39,23 +39,10 @@ namespace Smth.Services
 
         public ApplicationUser Login(string username, string password)
         {
-            var user = _context.Users.FirstOrDefault(u => 
+        var user = _context.Users.FirstOrDefault(u => 
         u.Username == username || u.Email == username);
         var users = _context.Users.ToList(); 
-        Console.WriteLine($"В БД пользователей: {users.Count}");
-        foreach (var u in users)
-        {
-            Console.WriteLine($"User: {u.Username}, Email: {u.Email}");
-        }
-
-        Console.WriteLine("Найден пользователь: " + user.Username);
-        Console.WriteLine("Хранимый хеш: " + user.PasswordHash);
-        Console.WriteLine("Введенный пароль: " + password);
-        if (user == null)
-        {
-            Console.WriteLine("Пользователь не найден: " + username);
-            return null;
-        }
+       
     
 
         if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
@@ -64,7 +51,6 @@ namespace Smth.Services
             return null;
         }
 
-        Console.WriteLine("Успешный вход");
         return user;
         }
     }
