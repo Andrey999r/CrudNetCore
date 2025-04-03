@@ -2,6 +2,169 @@
     ViewBag.Title = "Вход";
 }
 
+<style>
+    /* Основные цвета */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #424242;
+        --text: #FFFFFF;
+        --text-light: #BDBDBD;
+        --error-red: #dc3545;
+        --input-bg: #2b2b2b;
+    }
+
+    /* Общие стили */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto,
+            Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+        line-height: 1.6;
+        background: var(--background);
+        color: var(--text);
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    /* Стили формы */
+    .auth-title {
+        color: var(--primary);
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        text-align: center;
+        font-weight: 600;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        border-bottom: none !important;
+        /* Убрана граница */
+        padding-bottom: 0 !important;
+    }
+
+    .auth-container {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 400px;
+        -webkit-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .auth-form {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .auth-input {
+        padding: 12px;
+        background: var(--input-bg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 1rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        transition: all 0.3s ease;
+    }
+
+    .auth-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 191, 165, 0.3);
+    }
+
+    .auth-submit {
+        background: var(--primary);
+        color: var(--text);
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        -webkit-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .auth-submit:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
+    }
+
+    .error-message {
+        color: var(--error-red);
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        background: rgba(220, 53, 69, 0.1);
+        border: 1px solid rgba(220, 53, 69, 0.3);
+        animation: fadeIn 0.5s ease;
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-light);
+    }
+
+    .auth-footer a {
+        color: var(--primary);
+        text-decoration: none;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .auth-footer a:hover {
+        color: var(--secondary);
+        text-shadow: 0 2px 4px rgba(0, 191, 165, 0.2);
+    }
+
+    /* Анимации */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Адаптивность */
+    @@media (max-width: 480px) {
+        .auth-container {
+            padding: 1.5rem;
+            margin: 10px;
+            border-radius: 8px;
+        }
+
+        .auth-title {
+            font-size: 1.75rem;
+        }
+    }
+</style>
+
 <h2 class="auth-title">Вход</h2>
 
 <div class="auth-container">

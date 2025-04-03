@@ -1,97 +1,206 @@
 @model Smth.ViewModel.ParticipantViewModel
-
 @{
     ViewData["Title"] = "Информация об участнике";
 }
 
 <style>
+    /* Основные переменные */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #2c2c2c;
+        --text: #ffffff;
+        --text-light: #BDBDBD;
+        --border-color: rgba(255,255,255,0.1);
+    }
+
     body {
-        background-color: #181818;
-        color: #ffffff;
-        font-family: Segoe UI, sans-serif;
+        background: var(--background);
+        color: var(--text);
+        font-family: 'Segoe UI', sans-serif;
     }
+
     h2, h3 {
-        color: #ffffff;
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 2rem;
+        font-weight: 600;
+        animation: fadeIn 0.8s ease;
     }
-    table {
+
+    .info-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        animation: cardEntrance 0.6s ease;
+    }
+
+    .participant-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        border: 1px solid var(--border-color);
+    }
+
+    .detail-item {
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: rgba(255,255,255,0.03);
+        border-radius: 8px;
+    }
+
+    .email-form {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        margin: 2rem 0;
+    }
+
+    input[type="email"] {
+        flex-grow: 1;
+        padding: 0.8rem 1.2rem;
+        background: rgba(255,255,255,0.05);
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text);
+        transition: all 0.3s ease;
+    }
+
+    input[type="email"]:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(0,191,165,0.2);
+    }
+
+    button {
+        padding: 0.8rem 1.5rem;
+        background: var(--primary);
+        color: #111;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    button:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,191,165,0.3);
+    }
+
+    .answers-table {
         width: 100%;
         border-collapse: collapse;
-        background-color: #222;
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        animation: fadeIn 0.6s ease;
     }
-    th, td {
-        padding: 10px;
-        border: 1px solid #444;
+
+    .answers-table th,
+    .answers-table td {
+        padding: 1.2rem;
+        border-bottom: 1px solid var(--border-color);
+        text-align: left;
     }
-    th {
-        background-color: #333;
-        color: #ffffff;
+
+    .answers-table th {
+        background: rgba(0,191,165,0.15);
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
     }
-    td {
-        color: #ddd;
+
+    .answers-table tr {
+        transition: all 0.3s ease;
     }
-    input[type="email"], button {
-        padding: 8px;
-        margin-top: 5px;
-        border: none;
-        border-radius: 4px;
+
+    .answers-table tr:hover {
+        background: rgba(255,255,255,0.03);
+        transform: translateX(8px);
     }
-    input[type="email"] {
-        background-color: #222;
-        color: #ffffff;
+
+    .message {
+        padding: 1rem;
+        background: rgba(0,191,165,0.1);
+        border-radius: 8px;
+        color: var(--primary);
+        animation: fadeIn 0.5s ease;
     }
-    button {
-        background-color: #00d1a0;
-        color: #ffffff;
-        cursor: pointer;
+
+    @@keyframes cardEntrance {
+        from { opacity: 0; transform: translateY(30px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    button:hover {
-        background-color: #00b48a;
+
+    @@keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
-    p {
-        color: #bbb;
+
+    @@media (max-width: 768px) {
+        .info-container {
+            padding: 1rem;
+        }
+        
+        .email-form {
+            flex-direction: column;
+        }
+        
+        .answers-table {
+            display: block;
+            overflow-x: auto;
+        }
     }
 </style>
 
-<h2>@ViewData["Title"]</h2>
+<div class="info-container">
+    <h2>@ViewData["Title"]</h2>
 
-<div>
-    <p><strong>Имя:</strong> @Model.ParticipantName</p>
-    
-    <form asp-action="UpdateEmail" method="post">
-        <input type="hidden" name="Id" value="@Model.Id" />
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="Email" value="@Model.Email" required />
-        <button type="submit">Обновить Email</button>
-    </form>
+    <div class="participant-card">
+        <div class="detail-item">
+            <strong>Имя:</strong> @Model.ParticipantName
+        </div>
 
-    @if (TempData["Message"] != null)
+        <form class="email-form" asp-action="UpdateEmail" method="post">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="email" id="email" name="Email" value="@Model.Email" placeholder="Введите email" required />
+            <button type="submit">Обновить Email</button>
+        </form>
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="message">@TempData["Message"]</div>
+        }
+    </div>
+
+    <h3>Ответы на опросы</h3>
+    @if (Model.Answers.Any())
     {
-        <p style="color: #00d1a0;">@TempData["Message"]</p>
+        <table class="answers-table">
+            <thead>
+                <tr>
+                    <th>Вопрос</th>
+                    <th>Ответ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var answer in Model.Answers)
+                {
+                    <tr>
+                        <td>@answer.Text</td>
+                        <td>@answer.ResponseText</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="message">Нет данных о пройденных опросах</div>
     }
 </div>
-
-<h3>Ответы на опросы</h3>
-@if (Model.Answers.Any())
-{
-    <table>
-        <thead>
-            <tr>
-                <th>Вопрос</th>
-                <th>Ответ</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var answer in Model.Answers)
-            {
-                <tr>
-                    <td>@answer.Text</td>
-                    <td>@answer.ResponseText</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>Нет данных о пройденных опросах.</p>
-}

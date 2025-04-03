@@ -4,8 +4,152 @@
     ViewBag.Title = "Созданные опросы";
 }
 
+<style>
+    /* Основные переменные */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #2c2c2c;
+        --text: #ffffff;
+        --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .action-link.delete-action:hover {
+        background: #dc3545 !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3) !important;
+    }
+
+    h2 {
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 2rem;
+        font-weight: 600;
+        animation: fadeIn 0.8s ease;
+    }
+
+    .create-survey-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 1rem 2rem;
+        background: var(--primary);
+        color: #111;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(0, 191, 165, 0.2);
+        margin-bottom: 2rem;
+    }
+
+    .create-survey-link:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 191, 165, 0.3);
+    }
+
+    .surveys-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        animation: cardEntrance 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .surveys-table th,
+    .surveys-table td {
+        padding: 1.2rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .surveys-table th {
+        background: rgba(0, 191, 165, 0.15);
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+
+    .surveys-table tr {
+        transition: all 0.3s ease;
+    }
+
+    .surveys-table tr:hover {
+        background: rgba(255, 255, 255, 0.03);
+        transform: translateX(8px);
+    }
+
+    .action-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        background: rgba(0, 191, 165, 0.1);
+        color: var(--primary);
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin: 0.3rem;
+    }
+
+    .action-link:hover {
+        background: var(--primary);
+        color: #111;
+        box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
+    }
+
+    .no-surveys {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-light);
+        font-size: 1.1rem;
+        animation: fadeIn 0.5s ease;
+    }
+
+    /* Анимации */
+    @@keyframes cardEntrance {
+        from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .surveys-table {
+            display: block;
+            overflow-x: auto;
+        }
+
+        .action-link {
+            margin: 0.2rem;
+            padding: 0.5rem 1rem;
+        }
+    }
+</style>
+
 <h2>Созданные опросы</h2>
-<a class="create-survey-link" href="/Surveys/Create">Создать опрос</a>
+<a class="create-survey-link" href="/Surveys/Create">
+    <i class="fas fa-plus"></i> Создать опрос
+</a>
 
 @if (!Model.Any())
 {
@@ -26,65 +170,21 @@ else
                 <tr>
                     <td>@survey.Name</td>
                     <td>
-                        <a href="/Surveys/Delete/@survey.Id" class="action-link">Удалить</a>
-                        <a href="/Surveys/Share/@survey.Id" class="action-link">Поделиться</a>
-                        <a href="/Surveys/Details/@survey.Id" class="action-link">Детали</a>
+                        <a href="/Surveys/Delete/@survey.Id" class="action-link delete-action">
+                            <i class="fas fa-trash"></i> Удалить
+                        </a>
+                        <a href="/Surveys/Share/@survey.Id" class="action-link">
+                            <i class="fas fa-share"></i> Поделиться
+                        </a>
+                        <a href="/Surveys/Details/@survey.Id" class="action-link">
+                            <i class="fas fa-info-circle"></i> Детали
+                        </a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-<style>
-    .create-survey-link {
-        display: inline-block;
-        padding: 12px 18px;
-        font-size: 18px;
-        font-weight: bold;
-        color: white;
-        background-color: #00bfa5;
-        border: none;
-        border-radius: 8px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        margin-bottom: 15px;
-    }
 
-    .create-survey-link:hover {
-        background-color: #008c7a;
-    }
-
-    .surveys-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .surveys-table th,
-    .surveys-table td {
-        padding: 12px 20px;
-        text-align: left;
-        background-color: #222;
-        color: #ddd;
-        border-radius: 5px;
-    }
-
-    .surveys-table th {
-        background-color: #333;
-        color: white;
-        font-size: 16px;
-    }
-
-    .action-link {
-        display: inline-block;
-        padding: 8px 12px;
-        background-color: #00bfa5;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-    }
-
-    .action-link:hover {
-        background-color: #008c7a;
-    }
-</style>
+<!-- Подключение иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

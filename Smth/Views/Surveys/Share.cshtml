@@ -2,97 +2,135 @@
     ViewBag.Title = "Поделиться опросом";
 }
 
-<div class="share-container">
-    <h2>Поделиться опросом</h2>
-    <p>Скопируйте ссылку или отправьте приглашение на email.</p>
-
-    <!-- Поле с ссылкой -->
-    <div class="input-group">
-        <input id="surveyLink" type="text" class="input-field" value="@ViewBag.ShareLink" readonly>
-        <button class="copy-btn" onclick="copyLink()">Скопировать</button>
-    </div>
-
-    <!-- Форма отправки email -->
-    <form method="post" action="@Url.Action("SendSurveyInvitation", "Surveys")">
-        <input type="hidden" name="surveyId" value="@ViewBag.SurveyId" />
-        <label for="email" class="label">Email получателя:</label>
-        <input type="email" class="input-field" name="recipientEmail" id="email" required>
-        <button type="submit" class="send-btn">Отправить приглашение</button>
-    </form>
-</div>
-
 <style>
+    /* Основные переменные */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #2c2c2c;
+        --text: #ffffff;
+        --text-light: #BDBDBD;
+        --border-color: rgba(255,255,255,0.1);
+    }
+
     .share-container {
-        background-color: #222;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
         max-width: 600px;
-        margin: auto;
-        color: #ddd;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        animation: cardEntrance 0.6s ease;
     }
 
     h2 {
-        color: white;
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
     }
 
     .input-group {
         display: flex;
-        gap: 10px;
-        margin-bottom: 15px;
-        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
     }
 
     .input-field {
         flex: 1;
-        padding: 10px;
-        border-radius: 5px;
-        border: none;
-        background: #333;
-        color: white;
-        text-align: center;
+        padding: 0.8rem 1.2rem;
+        background: rgba(255,255,255,0.05);
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text);
+        transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(0,191,165,0.2);
     }
 
     .copy-btn, .send-btn {
-        padding: 10px;
+        padding: 0.8rem 1.5rem;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
-        font-weight: bold;
-        transition: 0.3s;
+        font-weight: 500;
+        transition: all 0.3s ease;
     }
 
     .copy-btn {
-        background-color: #00bfa5;
-        color: white;
+        background: var(--primary);
+        color: #111;
     }
 
     .send-btn {
-        background-color: #67BA80;
-        color: white;
+        background: var(--secondary);
+        color: #111;
         width: 100%;
-        margin-top: 10px;
+                margin-top: 1rem;
+
     }
 
-    .copy-btn:hover {
-        background-color: #009688;
-    }
-
-    .send-btn:hover {
-        background-color: #4CAF50;
+    .copy-btn:hover, .send-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,191,165,0.3);
     }
 
     .label {
         display: block;
-        margin: 10px 0 5px;
+        margin-bottom: 0.5rem;
+        color: var(--text-light);
+    }
+
+    @@keyframes cardEntrance {
+        from { opacity: 0; transform: translateY(30px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @@media (max-width: 768px) {
+        .input-group {
+            flex-direction: column;
+        }
+        
+        .input-field, .copy-btn {
+            width: 100%;
+        }
     }
 </style>
 
+<div class="share-container">
+    <h2>Поделиться опросом</h2>
+    <p class="text-light">Скопируйте ссылку или отправьте приглашение на email</p>
+
+    <div class="input-group">
+        <input id="surveyLink" type="text" class="input-field" value="@ViewBag.ShareLink" readonly>
+        <button class="copy-btn" onclick="copyLink()">
+            <i class="fas fa-copy"></i> Скопировать
+        </button>
+    </div>
+
+    <form method="post" action="@Url.Action("SendSurveyInvitation", "Surveys")">
+        <input type="hidden" name="surveyId" value="@ViewBag.SurveyId" />
+        <label for="email" class="label">Email получателя:</label>
+        <input type="email" class="input-field" name="recipientEmail" id="email" required>
+        <button type="submit" class="send-btn">
+            <i class="fas fa-paper-plane"></i> Отправить приглашение
+        </button>
+    </form>
+</div>
+
 <script>
     function copyLink() {
-        var copyText = document.getElementById("surveyLink");
+        const copyText = document.getElementById("surveyLink");
         navigator.clipboard.writeText(copyText.value).then(() => {
+            // Можно добавить красивый toast вместо alert
             alert("Ссылка скопирована: " + copyText.value);
         });
     }
 </script>
+
+<!-- Подключение иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

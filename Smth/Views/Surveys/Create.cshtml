@@ -1,59 +1,253 @@
 @{
-ViewBag.Title = "Создать опрос";
+    ViewBag.Title = "Создать опрос";
 }
 
-<h1>Создать опрос</h1>
+<style>
+    /* Основные стили */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #2c2c2c;
+        --text: #ffffff;
+        --border-color: rgba(255,255,255,0.1);
+    }
 
-<form method="post" class="create-survey-form">
-    <div class="form-row">
-        <input type="text" name="name" placeholder="Название опроса" class="survey-input" required />
-        <textarea name="description" placeholder="Описание" class="survey-textarea" required></textarea>
+    body {
+        background: var(--background);
+        color: var(--text);
+        font-family: 'Segoe UI', sans-serif;
+    }
 
+    .create-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        animation: cardEntrance 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    h1 {
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 2rem;
+        font-weight: 600;
+        animation: fadeIn 0.8s ease;
+    }
+
+    /* Поля ввода */
+    .input-group {
+        margin-bottom: 1.5rem;
+        animation: slideIn 0.5s ease;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+        font-weight: 500;
+    }
+
+    .survey-input,
+    .survey-textarea {
+        width: 100%;
+        padding: 1rem;
+        background: rgba(255,255,255,0.05);
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .survey-input:focus,
+    .survey-textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(0,191,165,0.2);
+        outline: none;
+    }
+
+    /* Блок вопросов */
+    .questions-section {
+        margin-top: 2rem;
+        border-top: 2px solid var(--border-color);
+        padding-top: 2rem;
+    }
+
+    .question-item {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        animation: questionAppear 0.4s ease-out;
+    }
+
+    .question-input {
+        flex-grow: 1;
+        padding: 0.8rem 1.2rem;
+        background: rgba(255,255,255,0.03);
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text);
+        transition: all 0.3s ease;
+    }
+
+    /* Кнопки */
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: flex-end;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .btn-primary {
+        background: var(--primary);
+        color: #111;
+    }
+
+    .btn-primary:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,191,165,0.3);
+    }
+
+    .btn-secondary {
+        background: rgba(0,191,165,0.1);
+        color: var(--primary);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(0,191,165,0.2);
+    }
+
+    .remove-btn {
+        background: none;
+        border: none;
+        color: #ff4444;
+        cursor: pointer;
+        padding: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .remove-btn:hover {
+        transform: scale(1.2);
+    }
+
+    /* Анимации */
+    @@keyframes cardEntrance {
+        from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @@keyframes questionAppear {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @@media (max-width: 768px) {
+        .create-container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+        
+        .question-item {
+            flex-direction: column;
+        }
+        
+        .button-group {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="create-container">
+    <h1>Создать опрос</h1>
+    
+    <div class="input-group">
+        <label>Название опроса</label>
+        <input type="text" class="survey-input" placeholder="Введите название">
     </div>
 
-    <h3>Вопросы:</h3>
-    <div id="questions-container">
-        <div class="question-row">
-            <input type="text" name="questions" placeholder="Вопрос 1" class="question-input" required />
-            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
-        </div>
-        <div class="question-row">
-            <input type="text" name="questions" placeholder="Вопрос 2" class="question-input" required />
-            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
-        </div>
-        <div class="question-row">
-            <input type="text" name="questions" placeholder="Вопрос 3" class="question-input" required />
-            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
-        </div>
+    <div class="input-group">
+        <label>Описание</label>
+        <textarea class="survey-textarea" rows="3" placeholder="Добавьте описание"></textarea>
     </div>
 
-    <div class="actions">
-        <button type="button" class="add-question-btn" onclick="addQuestion()">Добавить вопрос</button>
-        <input type="submit" value="Создать" class="create-button" />
+    <div class="questions-section">
+        <h3>Вопросы</h3>
+        <div id="questions-container">
+            <div class="question-item">
+                <input type="text" class="question-input" placeholder="Вопрос 1">
+                <button type="button" class="remove-btn">✕</button>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="btn btn-secondary" onclick="addQuestion()">Добавить вопрос</button>
+            <button type="submit" class="btn btn-primary">Создать опрос</button>
+        </div>
     </div>
-</form>
+</div>
 
 @section Scripts {
 <script>
+    let questionCount = 1;
+
     function addQuestion() {
-        var container = document.getElementById("questions-container");
-        var count = container.querySelectorAll('.question-row').length + 1;
-        var row = document.createElement('div');
-        row.className = 'question-row';
-        row.innerHTML = '<input type="text" name="questions" placeholder="Вопрос ' + count + '" class="question-input" required />' +
-            '<button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>';
-        container.appendChild(row);
+        const container = document.getElementById("questions-container");
+        questionCount++;
+        const newQuestion = document.createElement('div');
+        newQuestion.className = 'question-item';
+        newQuestion.innerHTML = `
+            <input type="text" class="question-input" placeholder="Вопрос ${questionCount}">
+            <button type="button" class="remove-btn" onclick="removeQuestion(this)">✕</button>
+        `;
+        container.appendChild(newQuestion);
+        newQuestion.scrollIntoView({ behavior: 'smooth' });
     }
 
     function removeQuestion(btn) {
-        var row = btn.parentNode;
-        var container = document.getElementById("questions-container");
-        container.removeChild(row);
-        var rows = container.querySelectorAll('.question-row');
-        rows.forEach((r, i) => {
-            var input = r.querySelector('.question-input');
-            input.placeholder = "Вопрос " + (i + 1);
+        const questionItem = btn.closest('.question-item');
+        questionItem.style.animation = 'questionAppear 0.3s reverse';
+        setTimeout(() => {
+            questionItem.remove();
+            updateQuestionNumbers();
+        }, 300);
+    }
+
+    function updateQuestionNumbers() {
+        const questions = document.querySelectorAll('.question-input');
+        questions.forEach((input, index) => {
+            input.placeholder = `Вопрос ${index + 1}`;
         });
+        questionCount = questions.length;
     }
 </script>
 }

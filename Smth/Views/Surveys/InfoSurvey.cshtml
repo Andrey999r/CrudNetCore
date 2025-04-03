@@ -3,38 +3,162 @@
     ViewBag.Title = "Детали пройденного опроса";
 }
 
-<h2>Опрос: @Model.SurveyName</h2>
+<style>
+    /* Основные переменные */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #2c2c2c;
+        --text: #ffffff;
+        --text-light: #BDBDBD;
+        --border-color: rgba(255,255,255,0.1);
+    }
 
-<div class="participant-info">
-    <p><strong>Имя участника:</strong> @Model.ParticipantName</p>
-    <p><strong>Email:</strong> @Model.Email</p>
+    body {
+        background: var(--background);
+        color: var(--text);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    h2, h3 {
+        color: var(--primary);
+        margin-bottom: 2rem;
+        font-weight: 600;
+        animation: fadeIn 0.8s ease;
+    }
+
+    .participant-info {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        animation: cardEntrance 0.6s ease;
+    }
+
+    .participant-info p {
+        margin: 1rem 0;
+        font-size: 1.1rem;
+    }
+
+    .surveys-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        animation: fadeIn 0.6s ease;
+    }
+
+    .surveys-table th,
+    .surveys-table td {
+        padding: 1.2rem;
+        border-bottom: 1px solid var(--border-color);
+        text-align: left;
+    }
+
+    .surveys-table th {
+        background: rgba(0,191,165,0.15);
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .surveys-table tr {
+        transition: all 0.3s ease;
+    }
+
+    .surveys-table tr:hover {
+        background: rgba(255,255,255,0.03);
+        transform: translateX(8px);
+    }
+
+    .create-survey-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 1rem 2rem;
+        background: var(--primary);
+        color: #111;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 2rem;
+        box-shadow: 0 4px 15px rgba(0,191,165,0.2);
+    }
+
+    .create-survey-link:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,191,165,0.3);
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@keyframes cardEntrance {
+        from { opacity: 0; transform: translateY(30px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @@media (max-width: 768px) {
+        .surveys-table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        .participant-info {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<div class="main-container">
+    <h2>Опрос: @Model.SurveyName</h2>
+
+    <div class="participant-info">
+        <p><strong>Имя участника:</strong> @Model.ParticipantName</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+    </div>
+
+    <h3>Ответы:</h3>
+
+    @if (!Model.Answers.Any())
+    {
+        <div class="empty-message">
+            <p>Ответов не найдено</p>
+        </div>
+    }
+    else
+    {
+        <table class="surveys-table">
+            <thead>
+                <tr>
+                    <th>Вопрос</th>
+                    <th>Ответ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var answer in Model.Answers)
+                {
+                    <tr>
+                        <td><strong>@answer.Text</strong></td>
+                        <td>@answer.ResponseText</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <a href="@Url.Action("Completed", "Surveys")" class="create-survey-link">
+        <i class="fas fa-arrow-left"></i> Назад к списку
+    </a>
 </div>
 
-<h3>Ответы:</h3>
-
-@if (!Model.Answers.Any())
-{
-    <p>Ответов не найдено.</p>
-}
-else
-{
-    <table class="surveys-table">
-        <thead>
-            <tr>
-                <th>Вопрос</th>
-                <th>Ответ</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var answer in Model.Answers)
-            {
-                <tr>
-                    <td><strong>@answer.Text</strong></td>
-                    <td>@answer.ResponseText</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-<a href="@Url.Action("Completed", "Surveys")" class="create-survey-link">Назад к списку</a>
+<!-- Подключение иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

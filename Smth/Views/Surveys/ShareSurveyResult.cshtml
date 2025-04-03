@@ -2,60 +2,162 @@
     ViewBag.Title = "Результат отправки приглашения";
 }
 
-<div class="container mt-5 d-flex justify-content-center">
-    <div class="card p-4 text-center result-box @(ViewBag.IsSuccess ? "success-bg" : "error-bg")">
-        <h2 class="result-title">@(ViewBag.IsSuccess ? "✅ Успех!" : "❌ Ошибка!")</h2>
-        <p class="result-message">@ViewBag.Message</p>
-    </div>
-</div>
-
-<!-- Кнопка теперь значительно ниже -->
-<div class="container d-flex justify-content-center mt-4">
-    <a href="@Url.Action("Index", "Home")" class="btn btn-home">На главную</a>
-</div>
-
 <style>
+    /* Основные переменные */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #2c2c2c;
+        --text: #ffffff;
+        --text-light: #BDBDBD;
+    }
+
+    body {
+        background: var(--background);
+        margin: 0;
+        overflow-x: hidden;
+    }
+
+    /* Контейнер результата */
+    .result-container {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start; /* Изменено на выравнивание сверху */
+        justify-content: center;
+        padding: 2rem;
+    }
+
     .result-box {
-        max-width: 400px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        padding-bottom: 20px;
-        margin-bottom: 30px; /* Увеличенный отступ снизу */
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 3rem;
+        max-width: 600px;
+        width: 90%;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        position: relative;
+        z-index: 2;
+        animation: scaleUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
     .success-bg {
-        background: #2d6a4f; /* Темно-зеленый */
-        color: #ffffff;
+        border: 3px solid var(--primary);
     }
 
     .error-bg {
-        background: #6a040f; /* Темно-красный */
-        color: #ffffff;
+        border: 3px solid #dc3545;
     }
 
     .result-title {
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 2rem;
+        text-align: center;
     }
 
     .result-message {
-        font-size: 18px;
-        margin-bottom: 15px;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: var(--text);
+        text-align: center;
+        margin-bottom: 3rem;
     }
 
     .btn-home {
-        background: #ffbe0b;
-        color: #000;
-        font-weight: bold;
-        padding: 12px 20px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-size: 18px;
-        transition: 0.3s;
+        background: var(--primary);
+        color: var(--text);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
     }
 
     .btn-home:hover {
-        background: #faa307;
-        color: white;
+        background: var(--secondary);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 16px rgba(0,191,165,0.3);
+    }
+
+    /* Анимации конфетти */
+    .confetti {
+        position: fixed;
+        width: 12px;
+        height: 12px;
+        background: var(--primary);
+        pointer-events: none;
+        animation: confetti-fall 4s linear forwards;
+    }
+
+    @@keyframes confetti-fall {
+        0% {
+            transform: translateY(-100vh) rotate(0deg) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh) rotate(720deg) scale(0);
+            opacity: 0;
+        }
+    }
+
+    @@keyframes scaleUp {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .result-box {
+            padding: 2rem 1.5rem;
+        }
+        
+        .result-title {
+            font-size: 2rem;
+        }
     }
 </style>
+
+<div class="result-container">
+    @if(ViewBag.IsSuccess)
+    {
+        <!-- Обновленные конфетти со случайным распределением -->
+        @for (int i = 0; i < 30; i++)
+        {
+            var rnd = new Random();
+            <div class="confetti" style="
+                left: @(rnd.Next(0, 100))%;
+                top: @(rnd.Next(-10, 10))%;
+                animation: 
+                    confetti-fall 
+                    @(rnd.Next(3, 6))s 
+                    cubic-bezier(@rnd.NextDouble(),@rnd.NextDouble(),@rnd.NextDouble(),@rnd.NextDouble()) 
+                    @(rnd.NextDouble())s 
+                    infinite;
+                background: hsl(@(rnd.Next(0, 360)), 70%, 50%);
+                width: @(rnd.Next(8, 16))px;
+                height: @(rnd.Next(8, 16))px;
+            "></div>
+        }
+    }
+    <div class="result-box @(ViewBag.IsSuccess ? "success-bg" : "error-bg")">
+        <h2 class="result-title">@(ViewBag.IsSuccess ? "🎉 Успех!" : "❌ Ошибка!")</h2>
+        <p class="result-message">@ViewBag.Message</p>
+        
+        <div class="text-center">
+            <a href="@Url.Action("Index", "Home")" class="btn-home">
+                <i class="fas fa-home"></i> На главную
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Подключение иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

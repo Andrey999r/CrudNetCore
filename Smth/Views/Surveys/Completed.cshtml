@@ -6,36 +6,135 @@
 
 <head>
     <style>
+        /* Основные цвета */
+        :root {
+            --primary: #00BFA5;
+            --secondary: #009688;
+            --background: #1d1d1d;
+            --card-bg: #424242;
+            --text: #FFFFFF;
+            --text-light: #BDBDBD;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
         .surveys-table {
             width: 100%;
             border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.6s ease-out;
         }
-        .surveys-table th, .surveys-table td {
-            padding: 10px;
-            border: 1px solid #ddd;
+
+        .surveys-table th,
+        .surveys-table td {
+            padding: 1.2rem;
             text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .create-survey-link {
-            margin-bottom: 10px;
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
+
+        .surveys-table th {
+            background: rgba(0, 191, 165, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+
+        .surveys-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .surveys-table tr {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .surveys-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateX(8px);
+        }
+
         .action-link {
-            padding: 5px 10px;
-            background-color: #28a745;
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.6rem 1.2rem;
+            background: var(--primary);
+            color: var(--text) !important;
+            border-radius: 8px;
             text-decoration: none;
-            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .action-link:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
+        }
+
+        .no-surveys {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .self-completed {
+            color: var(--primary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(0, 191, 165, 0.1);
+        }
+
+        .completed-by-others {
+            color: #BDBDBD;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(189, 189, 189, 0.1);
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .surveys-table {
+                border-radius: 8px;
+                margin: 1rem;
+            }
+
+            .surveys-table th,
+            .surveys-table td {
+                padding: 0.8rem;
+            }
         }
     </style>
 </head>
 
 <h2>Пройденные опросы</h2>
-
 
 @if (!Model.Any())
 {
@@ -74,8 +173,9 @@ else
                             }
                         </td>
                         <td>
-                            <a href="@Url.Action("InfoSurvey", "Surveys", new { participantId = participant.Id })" class="action-link">
-                                Посмотреть ответы
+                            <a href="@Url.Action("InfoSurvey", "Surveys", new { participantId = participant.Id })"
+                                class="action-link">
+                                <i class="fas fa-eye mr-1"></i> Ответы
                             </a>
                         </td>
                     </tr>
@@ -84,3 +184,6 @@ else
         </tbody>
     </table>
 }
+
+<!-- Подключение иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

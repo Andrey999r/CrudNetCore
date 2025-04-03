@@ -1,124 +1,252 @@
 @model Smth.ViewModel.SurveyDetailsViewModel
-
 @{
     ViewBag.Title = Model.Name;
 }
 
-<div class="survey-container">
-    <h2 class="survey-title">@Model.Name</h2>
-
-    <div class="survey-card">
-        <p class="survey-description">@Model.Description</p>
-    </div>
-
-    <div class="participants-card">
-        <h3 class="participants-title">Участники:</h3>
-
-        @if (Model.Participants == null || !Model.Participants.Any())
-        {
-            <p class="no-participants">Пока никто не прошёл этот опрос.</p>
-        }
-        else
-        {
-            <ul class="participants-list">
-                @foreach (var p in Model.Participants)
-                {
-                    <li class="participant">
-                        <a href="@Url.Action("Info", "Surveys", new { participantId = p.Id })">
-                            <strong>@p.ParticipantName</strong> - <span>@p.Email</span>
-                        </a>
-                        <span class="completed-date">@p.CompletedAt.ToString("dd.MM.yyyy HH:mm")</span>
-
-                        <form method="post" asp-action="DeleteParticipant" asp-controller="Surveys"
-                              onsubmit="return confirm('Вы уверены, что хотите удалить участника?');" 
-                              class="delete-form">
-                            <input type="hidden" name="participantId" value="@p.Id" />
-                            <button type="submit" class="delete-btn">🗑</button>
-                        </form>
-                    </li>
-                }
-            </ul>
-        }
-    </div>
-</div>
-
 <style>
-    .survey-container {
-        max-width: 600px;
-        margin: auto;
+    /* Основные переменные */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --danger: #dc3545;
+        --background: #1d1d1d;
+        --card-bg: #2c2c2c;
+        --text: #ffffff;
+        --text-light: #BDBDBD;
+        --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        animation: fadeIn 0.6s ease;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        color: var(--primary);
         text-align: center;
-        color: #ddd;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+         border-bottom: none !important;
+        position: relative;
     }
 
-    .survey-title {
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 20px;
+    .card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-color);
     }
 
-    .survey-card, .participants-card {
-        background-color: #222;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-
-    .survey-description {
-        color: #aaa;
-    }
-
-    .participants-title {
-        color: white;
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    .no-participants {
-        color: #888;
-    }
-
-    .participants-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .participant {
+    .section-title {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #333;
-        padding: 10px;
-        border-radius: 5px;
-        margin: 5px 0;
+        font-size: 1.5rem;
+        color: var(--text);
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: none !important;
+        position: relative;
     }
 
-    .participant a {
-        color: #67BA80;
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .data-table-header {
+        background: rgba(0, 191, 165, 0.1);
+    }
+
+    .data-table-row {
+        display: grid;
+        grid-template-columns: 2fr 3fr 2fr 1fr;
+        gap: 1rem;
+        padding: 1.2rem;
+        align-items: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .data-table-row:hover {
+        background: rgba(255, 255, 255, 0.03);
+        transform: translateX(8px);
+    }
+
+    .data-table-cell {
+        padding: 0.8rem;
+        font-weight: 500;
+    }
+
+    .text-accent {
+        color: var(--primary);
         text-decoration: none;
-        font-weight: bold;
+        transition: all 0.3s ease;
     }
 
-    .completed-date {
-        color: #67BA80;
-        font-size: 14px;
-        margin-left: 10px;
+    .text-accent:hover {
+        color: var(--secondary);
+        text-decoration: underline;
     }
 
-    .delete-form {
-        display: inline;
-    }
-
-    .delete-btn {
+    .btn-danger {
         background: none;
         border: none;
+        padding: 0.5rem;
         cursor: pointer;
-        font-size: 18px;
-        color: #ff4d4d;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+        border-radius: 8px;
     }
 
-    .delete-btn:hover {
-        color: #ff1a1a;
+    .btn-danger:hover {
+        background: rgba(220, 53, 69, 0.1);
+        transform: scale(1.1);
+    }
+
+    .trash-icon {
+        width: 20px;
+        height: 20px;
+        stroke: var(--danger);
+        transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover .trash-icon {
+        stroke: #bb2d3b;
+        animation: shake 0.5s;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes shake {
+        0% {
+            transform: translateX(0)
+        }
+
+        25% {
+            transform: translateX(2px)
+        }
+
+        50% {
+            transform: translateX(-2px)
+        }
+
+        75% {
+            transform: translateX(2px)
+        }
+
+        100% {
+            transform: translateX(0)
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .data-table-row {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+            gap: 0.5rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+        }
+
+        .section-title {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
     }
 </style>
+
+<div class="main-container">
+    <h1 class="page-title">@Model.Name</h1>
+
+    <div class="card">
+        <div class="section-title">
+            <span>Описание опроса</span>
+        </div>
+        <p class="text-center">@Model.Description</p>
+    </div>
+
+    <div class="card">
+        <div class="section-title">
+            <span>Участники</span>
+            <span class="text-light">
+                @Model.Participants.Count
+                @{
+                    var count = Model.Participants.Count;
+                    var word = count switch
+                    {
+                        1 => "участник",
+                        > 1 and < 5 => "участника",
+                        _ => "участников"
+                    };
+                }
+                @word
+            </span>
+        </div>
+
+        @if (!Model.Participants.Any())
+        {
+            <p class="text-center text-light">Пока никто не прошёл опрос</p>
+        }
+        else
+        {
+            <div class="data-table">
+                <div class="data-table-header data-table-row">
+                    <div class="data-table-cell">Имя</div>
+                    <div class="data-table-cell">Email</div>
+                    <div class="data-table-cell">Дата</div>
+                    <div class="data-table-cell">Действия</div>
+                </div>
+
+                <div class="data-table-body">
+                    @foreach (var p in Model.Participants)
+                    {
+                        <div class="data-table-row">
+                            <div class="data-table-cell">
+                                <a href="@Url.Action("Info", "Surveys", new { participantId = p.Id })" class="text-accent">
+                                    @p.ParticipantName
+                                </a>
+                            </div>
+                            <div class="data-table-cell">@p.Email</div>
+                            <div class="data-table-cell">@p.CompletedAt.ToString("dd.MM.yyyy HH:mm")</div>
+                            <div class="data-table-cell">
+                                <form method="post" asp-action="DeleteParticipant" asp-controller="Surveys"
+                                    onsubmit="return confirm('Удалить участника?')">
+                                    <input type="hidden" name="participantId" value="@p.Id" />
+                                    <button type="submit" class="btn-danger">
+                                        <svg class="trash-icon" viewBox="0 0 24 24">
+                                            <path
+                                                d="M6 7V19C6 20.1046 6.89543 21 8 21H16C17.1046 21 18 20.1046 18 19V7M4 7H20M10 11V16M14 11V16M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

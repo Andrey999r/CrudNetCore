@@ -2,32 +2,94 @@
     ViewBag.Title = "Спасибо за участие!";
 }
 
-<div class="thank-you-container">
-    <h2>Спасибо за участие, @ViewBag.ParticipantName!</h2>
-    <p>Ваши ответы сохранены.</p>
-    
-    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">На главную</a>
-</div>
-
 <style>
+    /* Основные переменные */
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #2c2c2c;
+        --text: #ffffff;
+        --text-light: #BDBDBD;
+    }
+
     .thank-you-container {
+        max-width: 600px;
+        margin: 4rem auto;
+        padding: 3rem;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         text-align: center;
-        margin-top: 50px;
+        animation: cardEntrance 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
-    
+
     .thank-you-container h2 {
-        color: #67BA80;
+        color: var(--primary);
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
     }
-    
+
+    .thank-you-container p {
+        color: var(--text-light);
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
     .btn-primary {
-        background-color: #67BA80;
-        color: white;
-        padding: 10px 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 1rem 2rem;
+        background: var(--primary);
+        color: #111;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
         text-decoration: none;
-        border-radius: 5px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 191, 165, 0.2);
     }
-    
+
     .btn-primary:hover {
-        background-color: #5aa470;
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 191, 165, 0.3);
+    }
+
+    @@keyframes cardEntrance {
+        from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .thank-you-container {
+            margin: 2rem 1rem;
+            padding: 2rem;
+        }
+
+        .thank-you-container h2 {
+            font-size: 1.5rem;
+        }
     }
 </style>
+
+<div class="thank-you-container">
+    <h2>Спасибо за участие, @ViewBag.ParticipantName!</h2>
+    <p>Ваши ответы успешно сохранены</p>
+
+    <a href="@Url.Action("Index", "Home")" class="btn-primary">
+        <i class="fas fa-home"></i> На главную
+    </a>
+</div>
+
+<!-- Подключение иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
