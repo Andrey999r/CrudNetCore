@@ -1,189 +1,196 @@
-@model List<Smth.Data.Survey>
 @{
-    ViewBag.ActiveTab = "Completed";
-    ViewBag.Title = "Пройденные опросы";
+    ViewBag.Title = "Создать опрос";
 }
 
-<head>
-    <style>
-        /* Основные цвета */
-        :root {
-            --primary: #00BFA5;
-            --secondary: #009688;
-            --background: #1d1d1d;
-            --card-bg: #424242;
-            --text: #FFFFFF;
-            --text-light: #BDBDBD;
+<h2>Создать опрос</h2>
+
+<form method="post" class="create-survey-form">
+    <div class="form-row">
+        <input type="text" name="name" placeholder="Название опроса" class="survey-input" required />
+        <textarea name="description" placeholder="Описание" class="survey-textarea" required></textarea>
+    </div>
+
+    <h3>Вопросы:</h3>
+    <div id="questions-container">
+        <div class="question-row">
+            <input type="text" name="questions" placeholder="Вопрос 1" class="question-input" required />
+            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
+        </div>
+        <div class="question-row">
+            <input type="text" name="questions" placeholder="Вопрос 2" class="question-input" required />
+            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
+        </div>
+        <div class="question-row">
+            <input type="text" name="questions" placeholder="Вопрос 3" class="question-input" required />
+            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button type="button" class="add-question-btn" onclick="addQuestion()">+ Добавить вопрос</button>
+        <input type="submit" value="Создать" class="create-button" />
+    </div>
+</form>
+<style>
+    :root {
+        --primary: #00BFA5;
+        --secondary: #009688;
+        --background: #1d1d1d;
+        --card-bg: #424242;
+        --text: #FFFFFF;
+        --text-light: #BDBDBD;
+    }
+
+    body {
+        background: var(--background);
+        color: var(--text);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    h2, h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        font-weight: 600;
+        text-align: center;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .create-survey-form {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .survey-input,
+    .survey-textarea,
+    .question-input {
+        width: 100%;
+        padding: 1rem;
+        background: #333;
+        border: 1px solid #555;
+        border-radius: 12px;
+        color: var(--text);
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .survey-input:focus,
+    .survey-textarea:focus,
+    .question-input:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+
+    .survey-textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .question-row {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    .remove-question-btn {
+        background: transparent;
+        color: #ff6666;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .remove-question-btn:hover {
+        transform: scale(1.2);
+    }
+
+    .add-question-btn {
+        background: var(--primary);
+        color: var(--text);
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .add-question-btn:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
+    }
+
+    .create-button {
+        margin-top: 1.5rem;
+        width: 100%;
+        background: var(--primary);
+        color: var(--text);
+        padding: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+
+    .create-button:hover {
+        background: var(--secondary);
+        transform: scale(1.02);
+        box-shadow: 0 4px 14px rgba(0, 191, 165, 0.3);
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
         }
-
-        body {
-            background: var(--background);
-            color: var(--text);
-            font-family: 'Segoe UI', sans-serif;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        h2 {
-            color: var(--primary);
-            margin-bottom: 2rem;
-            font-weight: 600;
-            text-align: center;
+    @@media (max-width: 768px) {
+        .create-survey-form {
+            padding: 1.5rem;
         }
+    }
+</style>
+@section Scripts {
+<script>
+    function addQuestion() {
+        const container = document.getElementById("questions-container");
+        const count = container.querySelectorAll('.question-row').length + 1;
+        const row = document.createElement('div');
+        row.className = 'question-row';
+        row.innerHTML = `
+            <input type="text" name="questions" placeholder="Вопрос ${count}" class="question-input" required />
+            <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>`;
+        container.appendChild(row);
+    }
 
-        .surveys-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .surveys-table th,
-        .surveys-table td {
-            padding: 1.2rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .surveys-table th {
-            background: rgba(0, 191, 165, 0.1);
-            color: var(--primary);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .surveys-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .surveys-table tr {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .surveys-table tr:hover {
-            background: rgba(255, 255, 255, 0.03);
-            transform: translateX(8px);
-        }
-
-        .action-link {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.6rem 1.2rem;
-            background: var(--primary);
-            color: var(--text) !important;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .action-link:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
-        }
-
-        .no-surveys {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
-            font-size: 1.1rem;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .self-completed {
-            color: var(--primary);
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-            background: rgba(0, 191, 165, 0.1);
-        }
-
-        .completed-by-others {
-            color: #BDBDBD;
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-            background: rgba(189, 189, 189, 0.1);
-        }
-
-        @@keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @@media (max-width: 768px) {
-            .surveys-table {
-                border-radius: 8px;
-                margin: 1rem;
-            }
-
-            .surveys-table th,
-            .surveys-table td {
-                padding: 0.8rem;
-            }
-        }
-    </style>
-</head>
-
-<h2>Пройденные опросы</h2>
-
-@if (!Model.Any())
-{
-    <p class="no-surveys">Вы пока не проходили опросы.</p>
+    function removeQuestion(btn) {
+        const row = btn.parentNode;
+        const container = document.getElementById("questions-container");
+        container.removeChild(row);
+        const rows = container.querySelectorAll('.question-row');
+        rows.forEach((r, i) => {
+            r.querySelector('.question-input').placeholder = `Вопрос ${i + 1}`;
+        });
+    }
+</script>
 }
-else
-{
-    <table class="surveys-table">
-        <thead>
-            <tr>
-                <th>Название</th>
-                <th>Дата прохождения</th>
-                <th>Статус</th>
-                <th>Действие</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var survey in Model)
-            {
-                var participant = survey.Participants.FirstOrDefault(p => p.Email == ViewBag.UserEmail);
-                if (participant != null)
-                {
-                    bool isSelfCompleted = survey.Owner?.Email == ViewBag.UserEmail;
-
-                    <tr>
-                        <td>@survey.Name</td>
-                        <td>@participant.CompletedAt.ToString("dd.MM.yyyy HH:mm")</td>
-                        <td>
-                            @if (isSelfCompleted)
-                            {
-                                <span class="self-completed">Пройден самостоятельно</span>
-                            }
-                            else
-                            {
-                                <span class="completed-by-others">Полученный опрос</span>
-                            }
-                        </td>
-                        <td>
-                            <a href="@Url.Action("InfoSurvey", "Surveys", new { participantId = participant.Id })"
-                                class="action-link">
-                                <i class="fas fa-eye mr-1"></i> Ответы
-                            </a>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-}
-
-<!-- Подключение иконок -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

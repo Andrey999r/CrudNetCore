@@ -1,277 +1,221 @@
 @{
     ViewBag.Title = "Создать опрос";
 }
-
-<style>
-    :root {
-        --primary: #00BFA5;
-        --secondary: #009688;
-        --background: #1d1d1d;
-        --card-bg: #2c2c2c;
-        --text: #ffffff;
-        --error: #ff4444;
-    }
-
-    body {
-        background: var(--background);
-        color: var(--text);
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    .create-survey-form {
-        max-width: 800px;
-        margin: 2rem auto;
-        padding: 2rem;
-        background: var(--card-bg);
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        animation: formEntrance 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    .form-group {
-        margin-bottom: 2rem;
-        animation: slideIn 0.5s ease-out;
-    }
-
-    .form-label {
-        display: block;
-        color: var(--primary);
-        font-weight: 500;
-        margin-bottom: 0.8rem;
-        font-size: 1.1rem;
-    }
-
-    .survey-input,
-    .survey-textarea {
-        width: 100%;
-        padding: 1.2rem;
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        color: var(--text);
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-
-    .survey-input:focus,
-    .survey-textarea:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 15px rgba(0, 191, 165, 0.2);
-    }
-
-    .questions-section {
-        margin-top: 2rem;
-        border-top: 2px solid rgba(255, 255, 255, 0.1);
-        padding-top: 2rem;
-    }
-
-    .question-group {
-        margin-bottom: 1.5rem;
-        animation: questionAppear 0.4s ease-out;
-    }
-
-    .question-row {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-    }
-
-    .question-input {
-        flex-grow: 1;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        color: var(--text);
-        transition: all 0.3s ease;
-    }
-
-    .remove-question-btn {
-        background: none;
-        border: none;
-        color: var(--error);
-        cursor: pointer;
-        padding: 0.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .remove-question-btn:hover {
-        transform: scale(1.2);
-    }
-
-    .actions {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 3rem;
-    }
-
-    .add-question-btn,
-    .create-button {
-        padding: 1rem 2rem;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .add-question-btn {
-        background: rgba(0, 191, 165, 0.1);
-        color: var(--primary);
-    }
-
-    .add-question-btn:hover {
-        background: rgba(0, 191, 165, 0.2);
-    }
-
-    .create-button {
-        background: var(--primary);
-        color: #111;
-    }
-
-    .create-button:hover {
-        background: var(--secondary);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
-    }
-
-    @@keyframes formEntrance {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <style>
+        /* Глобальное правило для корректного расчёта размеров */
+        * {
+            box-sizing: border-box;
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @@keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateX(-20px);
+        :root {
+            --primary: #00BFA5;
+            --secondary: #009688;
+            --background: #1d1d1d;
+            --card-bg: #424242;
+            --text: #FFFFFF;
+            --text-light: #BDBDBD;
         }
 
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @@keyframes questionAppear {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
+        body {
+            background: var(--background);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        h2, h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-align: center;
+            animation: fadeIn 0.6s ease-out;
         }
-    }
 
-    @@media (max-width: 768px) {
         .create-survey-form {
-            margin: 1rem;
-            padding: 1.5rem;
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .form-row {
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .survey-input,
+        .survey-textarea,
+        .question-input {
+            width: 100%;
+            padding: 1rem;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .survey-input:focus,
+        .survey-textarea:focus,
+        .question-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .survey-textarea {
+            min-height: 100px;
+            resize: vertical;
         }
 
         .question-row {
-            flex-direction: column;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            animation: fadeIn 0.4s ease-out;
         }
-    }
-</style>
 
-<h1 style="text-align: center; margin-bottom: 2rem;">Создать опрос</h1>
+        .remove-question-btn {
+            background: transparent;
+            color: #ff6666;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
 
-<form method="post" action="/Surveys/Create" class="create-survey-form" onsubmit="return validateForm()">
-    <div class="form-group">
-        <label class="form-label">Название опроса</label>
-        <input type="text" name="Name" class="survey-input" placeholder="Введите название..." required>
-    </div>
+        .remove-question-btn:hover {
+            transform: scale(1.2);
+        }
 
-    <div class="form-group">
-        <label class="form-label">Описание</label>
-        <textarea name="Description" class="survey-textarea" rows="4" placeholder="Добавьте описание..."
-            required></textarea>
-    </div>
+        .add-question-btn {
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+        }
 
-    <div class="questions-section">
-        <h3 class="form-label">Вопросы</h3>
+        .add-question-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
+        }
+
+        .create-button {
+            margin-top: 1.5rem;
+            width: 100%;
+            background: var(--primary);
+            color: var(--text);
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .create-button:hover {
+            background: var(--secondary);
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(0, 191, 165, 0.3);
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .create-survey-form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Создать опрос</h2>
+
+    <form method="post" class="create-survey-form">
+        <!-- Название опроса -->
+        <div class="form-row">
+            <input type="text" name="name" placeholder="Название опроса" class="survey-input" required />
+        </div>
+
+        <!-- Описание -->
+        <div class="form-row">
+            <textarea name="description" placeholder="Описание" class="survey-textarea" required></textarea>
+        </div>
+
+        <!-- Заголовок для вопросов -->
+        <h3>Вопросы:</h3>
+
+        <!-- Контейнер для вопросов -->
         <div id="questions-container">
-            <div class="question-group">
-                <div class="question-row">
-                    <input type="text" name="Questions[0].Text" class="question-input" placeholder="Вопрос 1" required>
-                    <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
-                </div>
+            <div class="question-row">
+                <input type="text" name="questions" placeholder="Вопрос 1" class="question-input" required />
+                <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
+            </div>
+            <div class="question-row">
+                <input type="text" name="questions" placeholder="Вопрос 2" class="question-input" required />
+                <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
+            </div>
+            <div class="question-row">
+                <input type="text" name="questions" placeholder="Вопрос 3" class="question-input" required />
+                <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
             </div>
         </div>
 
+        <!-- Кнопки действий -->
         <div class="actions">
-            <button type="button" class="add-question-btn" onclick="addQuestion()">Добавить вопрос</button>
-            <input type="submit" value="Создать опрос" class="create-button" />
+            <button type="button" class="add-question-btn" onclick="addQuestion()">+ Добавить вопрос</button>
+            <input type="submit" value="Создать" class="create-button" />
         </div>
-    </div>
-</form>
+    </form>
 
-@section Scripts {
+    @section Scripts {
     <script>
-        let questionCount = 1;
-
         function addQuestion() {
             const container = document.getElementById("questions-container");
-            const newGroup = document.createElement('div');
-            newGroup.className = 'question-group';
-            newGroup.innerHTML = `
-                    <div class="question-row">
-                        <input type="text" 
-                               name="Questions[${questionCount}].Text" 
-                               class="question-input" 
-                               placeholder="Вопрос ${questionCount + 1}" 
-                               required>
-                        <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>
-                    </div>
-                `;
-            container.appendChild(newGroup);
-            questionCount++;
-            newGroup.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            const count = container.querySelectorAll('.question-row').length + 1;
+            const row = document.createElement('div');
+            row.className = 'question-row';
+            row.innerHTML = `
+                <input type="text" name="questions" placeholder="Вопрос ${count}" class="question-input" required />
+                <button type="button" class="remove-question-btn" onclick="removeQuestion(this)">✕</button>`;
+            container.appendChild(row);
         }
 
         function removeQuestion(btn) {
-            const questionGroup = btn.closest('.question-group');
-            questionGroup.style.animation = 'questionAppear 0.3s reverse';
-            setTimeout(() => {
-                questionGroup.remove();
-                renumberQuestions();
-            }, 300);
-        }
-
-        function renumberQuestions() {
-            const questions = document.querySelectorAll('.question-input');
-            questions.forEach((input, index) => {
-                input.name = `Questions[${index}].Text`;
-                input.placeholder = `Вопрос ${index + 1}`;
+            const row = btn.parentNode;
+            const container = document.getElementById("questions-container");
+            container.removeChild(row);
+            const rows = container.querySelectorAll('.question-row');
+            rows.forEach((r, i) => {
+                r.querySelector('.question-input').placeholder = 'Вопрос ' + (i + 1);
             });
-            questionCount = questions.length;
-        }
-
-        function validateForm() {
-            const title = document.querySelector('[name="Name"]');
-            const questions = document.querySelectorAll('.question-input');
-
-            if (!title.value.trim()) {
-                alert('Введите название опроса!');
-                return false;
-            }
-
-            if (questions.length === 0) {
-                alert('Добавьте хотя бы один вопрос!');
-                return false;
-            }
-
-            return true;
         }
     </script>
-}
+    }
+</body>
+</html>
