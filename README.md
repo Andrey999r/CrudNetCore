@@ -59,7 +59,7 @@ CREATE DATABASE surveydb
 
 ### Миграции базы данных
 ```bash
-dotnet ef database update --project CrudNetCore.Infrastructure
+dotnet ef database update
 ```
 
 ### Сборка и запуск
