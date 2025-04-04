@@ -64,9 +64,10 @@ dotnet ef database update --project CrudNetCore.Infrastructure
 
 ### Сборка и запуск
 ```bash
+cd smth
 dotnet restore
 dotnet build
-dotnet run --project CrudNetCore.Web
+dotnet run
 ```
 
 
