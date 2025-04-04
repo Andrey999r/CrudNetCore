@@ -4,7 +4,6 @@
 }
 
 <style>
-    /* Основные переменные */
     :root {
         --primary: #00BFA5;
         --secondary: #009688;
@@ -13,6 +12,18 @@
         --text: #ffffff;
         --text-light: #BDBDBD;
         --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .tab-button i,
+    .btn i,
+    .empty-state i {
+        margin-right: 0.75rem;
+        transition: transform 0.3s ease;
+    }
+
+    .tab-button:hover i,
+    .btn:hover i {
+        transform: translateX(2px);
     }
 
     .main-container {
@@ -30,11 +41,9 @@
         font-weight: 700;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         border-bottom: none !important;
-        /* Убрана граница */
         padding-bottom: 0 !important;
     }
 
-    /* Вкладки */
     .tab-container {
         display: flex;
         justify-content: center;
@@ -45,7 +54,7 @@
     .tab-button {
         padding: 1rem 2rem;
         border-radius: 8px;
-        background: linear-gradient(145deg, var(--primary), #1B5E20);
+        background: var(--primary);
         color: white;
         text-decoration: none;
         display: flex;
@@ -58,15 +67,14 @@
     .tab-button:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        background: linear-gradient(145deg, #1B5E20, var(--primary));
+        background: var(--primary);
     }
 
     .tab-button.active {
-        background: linear-gradient(145deg, #1B5E20, var(--primary));
+        background: var(--primary);
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    /* Карточки опросов */
     .surveys-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -121,7 +129,6 @@
         justify-content: flex-end;
     }
 
-    /* Кнопки */
     .btn {
         border-radius: 8px;
         padding: 0.8rem 1.5rem;
@@ -137,9 +144,9 @@
     .btn-primary:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 191, 165, 0.3);
+        background: var(--primary);
     }
 
-    /* Заглушка */
     .empty-state {
         text-align: center;
         padding: 4rem;
@@ -148,7 +155,6 @@
         border-radius: 12px;
     }
 
-    /* Анимации */
     @@keyframes fadeIn {
         from {
             opacity: 0;
@@ -173,7 +179,6 @@
         }
     }
 
-    /* Адаптивность */
     @@media (max-width: 768px) {
         .surveys-grid {
             grid-template-columns: 1fr;
@@ -194,7 +199,7 @@
 
     <div class="tab-container">
         <a href="/Surveys/Created" class="tab-button @(ViewBag.ActiveTab == "Created" ? "active" : "")">
-            <i class="fas fa-plus-circle mr-1"></i>Созданные
+            <i class="fas fa-plus-circle"></i>Созданные
         </a>
         <a href="/Surveys/Completed" class="tab-button @(ViewBag.ActiveTab == "Completed" ? "active" : "")">
             <i class="fas fa-check-circle mr-1"></i>Пройденные
@@ -232,5 +237,4 @@
     }
 </div>
 
-<!-- Подключение иконок -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

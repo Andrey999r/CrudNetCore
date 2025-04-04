@@ -41,7 +41,6 @@
         font-weight: 600;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 4px 15px rgba(0, 191, 165, 0.2);
-        margin-bottom: 2rem;
     }
 
     .create-survey-link:hover {
@@ -96,6 +95,13 @@
         margin: 0.3rem;
     }
 
+    .create-survey-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+
     .action-link:hover {
         background: var(--primary);
         color: #111;
@@ -147,9 +153,11 @@
 </style>
 
 <h2>Созданные опросы</h2>
-<a class="create-survey-link" href="/Surveys/Create">
-    <i class="fas fa-plus"></i> Создать опрос
-</a>
+<div class="create-survey-container">
+    <a class="create-survey-link" href="/Surveys/Create">
+        <i class="fas fa-plus"></i> Создать опрос
+    </a>
+</div>
 
 @if (!Model.Any())
 {

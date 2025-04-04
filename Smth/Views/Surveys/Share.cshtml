@@ -112,14 +112,15 @@
         </button>
     </div>
 
-    <form method="post" action="@Url.Action("SendSurveyInvitation", "Surveys")">
-        <input type="hidden" name="surveyId" value="@ViewBag.SurveyId" />
-        <label for="email" class="label">Email получателя:</label>
-        <input type="email" class="input-field" name="recipientEmail" id="email" required>
-        <button type="submit" class="send-btn">
-            <i class="fas fa-paper-plane"></i> Отправить приглашение
-        </button>
-    </form>
+   <form method="post" action="@Url.Action("SendSurveyInvitation", "Surveys")" onsubmit="return validateEmailDomain();">
+    <input type="hidden" name="surveyId" value="@ViewBag.SurveyId" />
+    <label for="email" class="label">Email получателя:</label>
+    <input type="email" class="input-field" name="recipientEmail" id="email" required>
+    <button type="submit" class="send-btn">
+        <i class="fas fa-paper-plane"></i> Отправить приглашение
+    </button>
+</form>
+
 </div>
 
 <script>
@@ -130,6 +131,7 @@
             alert("Ссылка скопирована: " + copyText.value);
         });
     }
+    
 </script>
 
 <!-- Подключение иконок -->
