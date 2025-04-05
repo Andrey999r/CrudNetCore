@@ -176,7 +176,6 @@ namespace Smth.Controllers
 
 
         [HttpPost]
-
         public IActionResult SendSurveyInvitation(int surveyId, string recipientEmail)
         {
             try
